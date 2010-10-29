@@ -68,7 +68,7 @@ Installing the sitemap
 
 In public/robots.txt:
 
-  Sitemap: http://www.yourdomain.com/sitemap.xml
+  Sitemap: http://yourdomain.com/sitemap.xml
 
 This will enable crawlers to find your sitemap.
 
