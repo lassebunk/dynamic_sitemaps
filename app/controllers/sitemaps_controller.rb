@@ -46,7 +46,7 @@ protected
       new_page!
     end
     
-    loc = url_for(loc) unless loc.is_a?(String)
+    loc = polymorphic_url(loc) unless loc.is_a?(String)
     
     current_page.urls << Sitemap::Url.new(loc, options)
   end
