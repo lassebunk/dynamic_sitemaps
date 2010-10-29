@@ -1,7 +1,7 @@
 Sitemap::Map.draw do
   
   # default per_page is 50.000 which is the specified maximum.
-  # per_page! 5
+  # per_page 5
 
   # url root_url, :last_mod => DateTime.now, :change_freq => 'daily', :priority => 1
   

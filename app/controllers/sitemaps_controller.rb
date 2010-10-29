@@ -37,12 +37,8 @@ protected
     pages.last
   end
   
-  def per_page!(size = nil)
-    @per_page = size
-  end
-  
-  def per_page
-    @per_page ||= 50000
+  def per_page(size = nil)
+    @per_page ||= size || 50000
   end
   
   def url(loc, options = {})
