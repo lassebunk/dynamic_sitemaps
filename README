@@ -97,6 +97,12 @@ Bing:
 Yahoo:
 
   Go to Site Explorer at http://siteexplorer.search.yahoo.com/ and follow instructions.
-  
+
+
+Todo
+====
+
+- Retrieve last date from urls in lib/sitemap/page.rb  
+
 
 Copyright (c) 2010 Lasse Bunk, released under the MIT license
