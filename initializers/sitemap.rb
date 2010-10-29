@@ -1,4 +1,5 @@
 Sitemap::Map.draw do
+  
   # default per_page is 50.000 which is the specified maximum.
   # per_page! 5
 
@@ -23,4 +24,5 @@ Sitemap::Map.draw do
   #               :last_mod => :updated_at,
   #               :change_freq => lambda { |user| user.very_active? ? 'weekly' : 'monthly' },
   #               :priority => 0.5
+  
 end
