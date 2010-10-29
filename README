@@ -1,13 +1,65 @@
-DynamicSitemaps
-===============
+Dynamic Sitemaps
+================
 
-Introduction goes here.
+Dynamic Sitemaps is a plugin for Ruby on Rails that enables you to easily create flexible, dynamic sitemaps.
+
+
+Installation (Rails 3)
+======================
+
+  $ rails plugin install git@github.com:lassebunk/dynamic_sitemaps.git
+
+After installing you need to create a sitemap route in config/routes.rb:
+
+  match 'sitemap' => 'sitemaps#sitemap'
 
 
 Example
 =======
 
-Example goes here.
+In config/routes.rb
+
+  match 'sitemap' => 'sitemaps#sitemap'
+  
+
+In config/initializers/sitemap.rb:
+
+  Sitemap::Map.draw do
+
+    # default page size is 50.000 which is the specified maximum.
+    per_page! 5
+
+    url root_url, :last_mod => DateTime.now, :change_freq => 'daily', :priority => 1
+  
+    new_page!
+  
+    Product.all.each do |product|
+      url product_url(product), :last_mod => product.updated_at, :change_freq => 'monthly', :priority => 0.8
+    end
+
+    new_page!
+  
+    autogenerate  :products, :categories,
+                  :last_mod => :updated_at,
+                  :change_freq => 'monthly',
+                  :priority => 0.8
+                
+    new_page!
+  
+    autogenerate  :users,
+                  :last_mod => :updated_at,
+                  :change_freq => lambda { |user| user.very_active? ? 'weekly' : 'monthly' },
+                  :priority => 0.5
+
+  end
 
 
-Copyright (c) 2010 [name of plugin creator], released under the MIT license
+Then go to
+
+  http://yourdomain.com/sitemap.xml
+  
+in your browser.
+
+
+
+Copyright (c) 2010 Lasse Bunk, released under the MIT license
