@@ -5,8 +5,17 @@ module Sitemap
     end
     
     def last_mod
-      # TODO: Retrieve last date from urls
-      DateTime.now # urls.max { |a, b| a.last_mod <=> b.last_mod }
+      mod = nil
+      
+      urls.each do |url|
+        unless url.last_mod.nil?
+          if mod.nil? || url.last_mod > mod
+            mod = url.last_mod
+          end
+        end
+      end
+      
+      mod
     end
   end
 end

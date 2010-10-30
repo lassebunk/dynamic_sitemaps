@@ -102,7 +102,6 @@ Yahoo:
 Todo
 ====
 
-- Retrieve last date from urls in lib/sitemap/page.rb  
 - Automatically add routes
 
 Copyright (c) 2010 Lasse Bunk, released under the MIT license
