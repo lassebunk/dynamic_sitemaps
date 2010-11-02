@@ -67,7 +67,7 @@ This will enable crawlers to find your sitemap.
 
 == Submitting the sitemap to crawlers
 
-<b>Google:</b>
+=== Google
 
 1. Go to Google Webmaster Central at http://www.google.com/webmasters/ and sign in
 
@@ -81,11 +81,11 @@ This will enable crawlers to find your sitemap.
 
 Google will now download and use your sitemap.
 
-<b>Bing:</b>
+=== Bing
 
 Go to Webmaster Tools at http://www.bing.com/toolbox/webmasters/ and follow instructions.
   
-<b>Yahoo:</b>
+=== Yahoo
 
 Go to Site Explorer at http://siteexplorer.search.yahoo.com/ and follow instructions.
 
