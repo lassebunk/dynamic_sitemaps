@@ -1,6 +1,6 @@
 Dynamic Sitemaps is a plugin for Ruby on Rails that enables you to easily create flexible, dynamic sitemaps.
 It creates sitemaps in the http://sitemaps.org standard which is supported by several crawlers including Google, Bing, and Yahoo.
-If the sitemap has more than 50.000 urls – or whatever you set it to using per_page – the plugin will automatically split the sitemap into smaller chunks and generate a sitemap index, also specified at http://sitemaps.org.
+If the sitemap has more than 50.000 urls – or whatever you set it to using <code>per_page</code> – the plugin will automatically split the sitemap into smaller chunks and generate a sitemap index, also specified at http://sitemaps.org.
 
 
 == Installation
