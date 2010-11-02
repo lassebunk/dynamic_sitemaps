@@ -84,9 +84,11 @@ This will enable crawlers to find your sitemap.
 Google will now download and use your sitemap.
 
 <b>Bing:</b>
+
 Go to Webmaster Tools at http://www.bing.com/toolbox/webmasters/ and follow instructions.
   
 <b>Yahoo:</b>
+
 Go to Site Explorer at http://siteexplorer.search.yahoo.com/ and follow instructions.
 
 
