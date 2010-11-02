@@ -69,7 +69,7 @@ This will enable crawlers to find your sitemap.
 
 == Submitting the sitemap to crawlers
 
-Google:
+<b>Google:</b>
 
 1. Go to Google Webmaster Central at http://www.google.com/webmasters/ and sign in
 
@@ -82,18 +82,17 @@ Google:
 5. Click "Submit Sitemap"
 
 Google will now download and use your sitemap.
-  
-Bing:
-  
-* Go to Webmaster Tools at http://www.bing.com/toolbox/webmasters/ and follow instructions.
-  
-Yahoo:
 
-* Go to Site Explorer at http://siteexplorer.search.yahoo.com/ and follow instructions.
+<b>Bing:</b>
+  
+Go to Webmaster Tools at http://www.bing.com/toolbox/webmasters/ and follow instructions.
+  
+<b>Yahoo:</b>
+
+Go to Site Explorer at http://siteexplorer.search.yahoo.com/ and follow instructions.
 
 
-Todo
-====
+== Todo
 
 - Automatically add routes
 
