@@ -9,17 +9,8 @@ In Rails 3:
 
   $ rails plugin install git@github.com:lassebunk/dynamic_sitemaps.git
 
-After installing you need to create a sitemap route in <code>config/routes.rb</code>:
-
-  match 'sitemap' => 'sitemaps#sitemap'
-
 
 == Example
-
-In <code>config/routes.rb</code>:
-
-  match 'sitemap' => 'sitemaps#sitemap'
-  
 
 In <code>config/initializers/sitemap.rb</code>:
 
@@ -75,7 +66,7 @@ This will enable crawlers to find your sitemap.
 
 3. Go to Site configuration > Sitemaps and click "Submit a Sitemap"
 
-4. Type in sitemap.xml (or whatever you have called it) – no domain is needed as this is locked to your current website
+4. Type in sitemap.xml – no domain is needed as this is locked to your current website
 
 5. Click "Submit Sitemap"
 
@@ -89,9 +80,4 @@ Go to Webmaster Tools at http://www.bing.com/toolbox/webmasters/ and follow inst
 
 Go to Site Explorer at http://siteexplorer.search.yahoo.com/ and follow instructions.
 
-
-== Todo
-
-- Automatically add routes
-
-Copyright (c) 2010 Lasse Bunk, released under the MIT license
+Copyright (c) 2010-2011 Lasse Bunk, released under the MIT license
