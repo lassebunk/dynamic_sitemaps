@@ -12,6 +12,13 @@ In Rails 3:
 
 == Example
 
+Start by generating initializer and route:
+
+  $ rails generate dynamic_sitemaps sitemap.xml
+  
+This will create <code>config/initializers/sitemap.rb</code> and add <code>match 'sitemap.xml' => 'sitemaps#sitemap'</code> to <code>config/routes.rb</code>.
+
+
 In <code>config/initializers/sitemap.rb</code>:
 
   Sitemap::Map.draw do

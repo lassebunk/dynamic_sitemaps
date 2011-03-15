@@ -1,3 +1,1 @@
-require 'fileutils'
-
-rm File.join(Rails.root, "config", "initializers", "sitemap.rb")
+# nothing here
