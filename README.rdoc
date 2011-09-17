@@ -14,7 +14,7 @@ In Rails 3:
 
 Start by generating initializer and route:
 
-  $ rails generate dynamic_sitemaps sitemap.xml
+  $ rails generate dynamic_sitemaps sitemap
   
 
 In <code>config/initializers/sitemap.rb</code>:
