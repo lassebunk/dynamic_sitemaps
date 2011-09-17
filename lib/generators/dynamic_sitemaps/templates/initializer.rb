@@ -1,4 +1,4 @@
-Sitemap::Map.draw do
+DynamicSitemaps::Sitemap.draw do
   
   # default per_page is 50.000 which is the specified maximum.
   # per_page 10

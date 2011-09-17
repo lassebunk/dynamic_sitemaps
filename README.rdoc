@@ -19,7 +19,7 @@ Start by generating initializer and route:
 
 In <code>config/initializers/sitemap.rb</code>:
 
-  Sitemap::Map.draw do
+  DynamicSitemaps::Sitemap.draw do
 
     # default page size is 50.000 which is the specified maximum at http://sitemaps.org.
     per_page 10

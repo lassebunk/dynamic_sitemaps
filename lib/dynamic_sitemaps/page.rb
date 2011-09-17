@@ -1,4 +1,4 @@
-module Sitemap
+module DynamicSitemaps
   class Page
     def urls
       @urls ||= []

@@ -1,4 +1,4 @@
-module Sitemap
+module DynamicSitemaps
   class Url
     attr_accessor :loc, :last_mod, :change_freq, :priority
     

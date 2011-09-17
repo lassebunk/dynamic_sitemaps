@@ -1,7 +1,7 @@
 class SitemapsController < ApplicationController
   def sitemap
     new_page!
-    instance_eval &Sitemap::Map.draw_block
+    instance_eval &DynamicSitemaps::Sitemap.draw_block
     
     if params[:page]
       if pages.count > 1
@@ -30,7 +30,7 @@ protected
   end
   
   def new_page!
-    pages << Sitemap::Page.new
+    pages << DynamicSitemaps::Page.new
   end
   
   def current_page
@@ -48,7 +48,7 @@ protected
     
     loc = polymorphic_url(loc) unless loc.is_a?(String)
     
-    current_page.urls << Sitemap::Url.new(loc, options)
+    current_page.urls << DynamicSitemaps::Url.new(loc, options)
   end
   
   def autogenerate(*args)

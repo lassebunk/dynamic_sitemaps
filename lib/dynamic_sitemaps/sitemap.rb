@@ -1,5 +1,5 @@
-module Sitemap
-  class Map
+module DynamicSitemaps
+  class Sitemap
     class << self
       attr_reader :draw_block
       
