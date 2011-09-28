@@ -62,6 +62,7 @@ protected
   end
   
   def convert_options(options, obj)
+    options = options.dup
     options.each do |key, value|
       if value.is_a?(Symbol)
         value = obj.send(value)
