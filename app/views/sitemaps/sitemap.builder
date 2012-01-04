@@ -5,7 +5,7 @@ xml.urlset "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9" do
       xml.loc url.loc
       
       if url.last_mod
-        xml.lastmod url.last_mod.to_date
+        xml.lastmod url.last_mod.strftime("%Y-%m-%dT%H:%M:%S%:z")
       end
       
       if url.change_freq
