@@ -5,10 +5,11 @@ If the sitemap has more than 50.000 urls – or whatever you set it to using <co
 
 == Installation
 
-In Rails 3:
+In your <em>Gemfile</em>:
 
-  $ rails plugin install git://github.com/lassebunk/dynamic_sitemaps.git
-
+  gem 'dynamic_sitemaps'
+  
+Then run <code>bundle install</code>.
 
 == Example
 
