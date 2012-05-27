@@ -1,4 +1,6 @@
 class SitemapsController < ApplicationController
+  layout nil
+  
   def sitemap
     new_page!
     instance_eval &DynamicSitemaps::Sitemap.draw_block

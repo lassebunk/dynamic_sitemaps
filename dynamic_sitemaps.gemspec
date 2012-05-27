@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "dynamic_sitemaps"
-  s.version = "1.0.5"
+  s.version = "1.0.6"
 
   s.author = "Lasse Bunk"
   s.email = "lassebunk@gmail.com"
