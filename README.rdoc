@@ -91,5 +91,10 @@ Go to Site Explorer at http://siteexplorer.search.yahoo.com/ and follow instruct
 
 If you want to notify search engines with changes to your sitemap, see the Sitemap Notifier (https://github.com/lassebunk/sitemap_notifier) plugin.
 
+== Contributors
+
+* Lasse Bunk (creator)
+* Aubrey Goodman
+
 
 Copyright (c) 2010-2011 Lasse Bunk, released under the MIT license
