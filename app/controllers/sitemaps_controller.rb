@@ -1,5 +1,5 @@
 class SitemapsController < ApplicationController
-  layout nil
+  layout false
   
   def sitemap
     new_page!
