@@ -101,6 +101,7 @@ If you want to notify search engines with changes to your sitemap, see the Sitem
 
 * Lasse Bunk (creator)
 * Aubrey Goodman
+* Vinu Varghese
 
 
 Copyright (c) 2010-2011 Lasse Bunk, released under the MIT license
