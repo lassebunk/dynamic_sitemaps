@@ -91,6 +91,12 @@ Go to Site Explorer at http://siteexplorer.search.yahoo.com/ and follow instruct
 
 If you want to notify search engines with changes to your sitemap, see the Sitemap Notifier (https://github.com/lassebunk/sitemap_notifier) plugin.
 
+
+== Todo's
+
+* Do it so that in your development environment you can see the sitemap without having to restart the server
+
+
 == Contributors
 
 * Lasse Bunk (creator)
