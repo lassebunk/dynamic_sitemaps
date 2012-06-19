@@ -94,7 +94,7 @@ If you want to notify search engines with changes to your sitemap, see the Sitem
 
 == Todo's
 
-* Do it so that in your development environment you can see the sitemap without having to restart the server
+* Do it so that in your development environment you can see the sitemap without having to restart the server – can anybody help me fix this?
 
 
 == Contributors
