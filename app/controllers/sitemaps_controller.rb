@@ -1,4 +1,4 @@
-class SitemapsController < ApplicationController
+class SitemapsController < ActionController::Base
   layout false
   
   def sitemap
