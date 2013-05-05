@@ -75,18 +75,13 @@ protected
     end
     options
   end
-  
+
+  def format_date(date)
+    if date.is_a?(Date)
+      date.strftime("%Y-%m-%d")
+    else
+      date.to_datetime.strftime("%Y-%m-%dT%H:%M:%S%:z")
+    end
+  end
+  helper_method :format_date
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
