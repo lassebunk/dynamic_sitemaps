@@ -1,9 +1,0 @@
-Description:
-    Generates initializer and route for dynamic_sitemaps.
-
-Example:
-    rails generate dynamic_sitemaps sitemap
-
-    This will create:
-        config/initializers/sitemap.rb
-        Route "match 'sitemap.xml' => 'sitemaps#sitemap'"
