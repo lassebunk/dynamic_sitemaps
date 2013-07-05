@@ -1,5 +1,7 @@
 namespace :sitemap do
   task :generate => :environment do
-    puts "Generating sitemap..."
+    Rails.logger.info "Generating sitemap..."
+    DynamicSitemaps.generate_sitemap
+    Rails.logger.info "Done generating sitemap."
   end
 end
