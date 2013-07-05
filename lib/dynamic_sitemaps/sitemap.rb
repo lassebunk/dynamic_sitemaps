@@ -14,22 +14,33 @@ module DynamicSitemaps
     #     url product
     #     url product_editions_path(product)
     #   end
+    
+    attr_reader :host, :folder
+
     def initialize(*args, &block)
       if args.first.is_a?(Symbol)
         @name = args.shift
       end
 
-      if args.first.is_a?(ActiveRecord::Relation)
+      if args.first.respond_to?(:find_each) || args.first.respond_to?(:each)
         @collection = args.shift
-        @name ||= @collection.table_name
+        @name ||= begin
+          @collection.table_name if @collection.respond_to?(:table_name)
+        end
       end
 
       if args.last.is_a?(Hash)
         options = args.pop
         @per_page = options[:per_page]
+        @host = options[:host]
+        @folder = options[:folder]
       end
 
       @block = block
+    end
+
+    def root_url
+      "http://#{host}"
     end
 
     def per_page

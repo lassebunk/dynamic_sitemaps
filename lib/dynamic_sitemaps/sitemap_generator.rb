@@ -1,10 +1,12 @@
 module DynamicSitemaps
   class SitemapGenerator
-    include Rails.application.routes.url_helpers
-    
     attr_reader :sitemap
+    attr_writer :counter, :page
 
     def initialize(sitemap)
+      unless self.class.included_modules.include?(Rails.application.routes.url_helpers)
+        self.class.send :include, Rails.application.routes.url_helpers
+      end
       @sitemap = sitemap
     end
 
@@ -14,7 +16,7 @@ module DynamicSitemaps
       write_end
       
       file.close
-      file_names
+      sitemaps
     end
 
     def write_beginning
@@ -26,13 +28,13 @@ module DynamicSitemaps
       if sitemap.collection
         handle_collection
       else
-        instance_eval sitemap.block
+        instance_eval &sitemap.block
       end
     end
 
     def write_url(url, options = {})
-      write '<url>' + format_url(url) + '</url>'
-      write '<loc>' + format_date(last_mod) + '</loc>'
+      write '<url>'
+      write '<loc>' + format_url(url) + '</loc>'
       if last_mod = options[:last_mod]
         write '<lastmod>' + format_date(last_mod) + '</lastmod>'
       end
@@ -50,7 +52,7 @@ module DynamicSitemaps
     end
 
     def write(string)
-      file.write string
+      file.puts string
     end
 
     def handle_collection
@@ -60,7 +62,7 @@ module DynamicSitemaps
             if sitemap.block
               instance_exec record, &sitemap.block
             else
-              write_url record
+              write_url record, last_mod: record.updated_at
             end
           end
 
@@ -92,22 +94,40 @@ module DynamicSitemaps
     end
 
     def file_name
-      sitemap.name + (page > 1 ? page.to_s : "") + ".xml"
+      sitemap.name.to_s + (page > 1 ? page.to_s : "") + ".xml"
+    end
+
+    def folder
+      sitemap.folder
+    end
+
+    def folder_path
+      "#{DynamicSitemaps.path}/#{folder}"
     end
 
     def path
-      "#{DynamicSitemaps.path.to_s}/#{file_name}"
+      "#{folder_path}/#{file_name}"
+    end
+
+    def host
+      sitemap.host
+    end
+
+    def sitemap_url
+      # TODO: This needs to support https and other ports. Built-in Rails method?
+      "#{root_url}/#{folder}/#{file_name}"
     end
 
     def file
       @file ||= begin
-        file_names << file_name
+        sitemaps << sitemap_url
+        FileUtils.mkdir_p folder_path
         File.open(path, "w")
       end
     end
 
-    def file_names
-      @file_names ||= []
+    def sitemaps
+      @sitemaps ||= []
     end
 
     def next_page
