@@ -9,6 +9,10 @@ module DynamicSitemaps
       @files = files
     end
 
+    def name
+      sitemap.name
+    end
+
     def host
       sitemap.host
     end
