@@ -127,10 +127,12 @@ module DynamicSitemaps
     end
 
     def next_page
+      write_end
       reset_counter
       file.close
       @file = nil
       self.page += 1
+      write_beginning
     end
 
     def url(url, options = {})
