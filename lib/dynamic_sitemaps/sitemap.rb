@@ -1,6 +1,6 @@
 module DynamicSitemaps
   class Sitemap
-    attr_accessor :name, :collection, :block
+    attr_reader :name, :collection, :block, :host, :folder
 
     # Initializes a sitemap object.
     # 
@@ -15,8 +15,6 @@ module DynamicSitemaps
     #     url product_editions_path(product)
     #   end
     
-    attr_reader :host, :folder
-
     def initialize(*args, &block)
       if args.first.is_a?(Symbol)
         @name = args.shift
@@ -27,13 +25,7 @@ module DynamicSitemaps
         @per_page = options[:per_page]
         @host = options[:host]
         @folder = options[:folder]
-      end
-
-      if args.first.respond_to?(:find_each) || args.first.respond_to?(:each)
-        @collection = args.shift
-        @name ||= begin
-          @collection.table_name if @collection.respond_to?(:table_name)
-        end
+        @collection = options[:collection]
       end
 
       @block = block

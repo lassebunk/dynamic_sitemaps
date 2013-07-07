@@ -18,6 +18,15 @@ module DynamicSitemaps
         sitemaps << SitemapGenerator.new(sitemap).generate
       end
 
+      def sitemap_for(collection, options = {}, &block)
+        raise "The collection given to `sitemap_for` must respond to #find_each. This is for performance. Use `Model.scoped` to get an ActiveRecord relation that responds to #find_each." unless collection.respond_to?(:find_each)
+
+        name = options.delete(:name) || collection.table_name.to_sym
+        options[:collection] = collection
+
+        sitemap(name, options, &block)
+      end
+
       # Array of SitemapResult
       def sitemaps
         @sitemaps ||= []

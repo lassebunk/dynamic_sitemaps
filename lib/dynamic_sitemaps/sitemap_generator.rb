@@ -57,16 +57,7 @@ module DynamicSitemaps
     end
 
     def handle_collection
-      [:find_each, :each].each do |each_method|
-        if sitemap.collection.respond_to?(each_method)
-          sitemap.collection.send each_method, &each_block
-          break
-        end
-      end
-    end
-
-    def each_block
-      @each_block ||= Proc.new do |record|
+      sitemap.collection.find_each do |record|
         if sitemap.block
           instance_exec record, &sitemap.block
         else
