@@ -63,7 +63,7 @@ module DynamicSitemaps
             if sitemap.block
               instance_exec record, &sitemap.block
             else
-              write_url record, last_mod: record.updated_at
+              url record, last_mod: record.updated_at
             end
           end
 
