@@ -59,17 +59,18 @@ module DynamicSitemaps
     def handle_collection
       [:find_each, :each].each do |each_method|
         if sitemap.collection.respond_to?(each_method)
-          each_block = Proc.new do |record|
-            if sitemap.block
-              instance_exec record, &sitemap.block
-            else
-              url record, last_mod: record.updated_at
-            end
-          end
-
           sitemap.collection.send each_method, &each_block
-
           break
+        end
+      end
+    end
+
+    def each_block
+      @each_block ||= Proc.new do |record|
+        if sitemap.block
+          instance_exec record, &sitemap.block
+        else
+          url record, last_mod: (record.respond_to?(:updated_at) ? record.updated_at : nil)
         end
       end
     end
