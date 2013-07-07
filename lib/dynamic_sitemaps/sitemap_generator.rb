@@ -16,7 +16,8 @@ module DynamicSitemaps
       write_end
       
       file.close
-      sitemaps
+      
+      SitemapResult.new(sitemap, files)
     end
 
     def write_beginning
@@ -113,21 +114,16 @@ module DynamicSitemaps
       sitemap.host
     end
 
-    def sitemap_url
-      # TODO: This needs to support https and other ports. Built-in Rails method?
-      "#{root_url}/#{folder}/#{file_name}"
-    end
-
     def file
       @file ||= begin
-        sitemaps << sitemap_url
+        files << file_name
         FileUtils.mkdir_p folder_path
         File.open(path, "w")
       end
     end
 
-    def sitemaps
-      @sitemaps ||= []
+    def files
+      @files ||= []
     end
 
     def next_page

@@ -16,16 +16,10 @@ module DynamicSitemaps
         args.last[:host] ||= host
         args.last[:folder] ||= folder
         sitemap = Sitemap.new(*args, &block)
-        files = SitemapGenerator.new(sitemap).generate
-        sitemaps << [sitemap.root_url, sitemap.folder, files]
+        sitemaps << SitemapGenerator.new(sitemap).generate
       end
 
-      # Returns an array of the generated sitemaps in the form:
-      # 
-      #   [
-      #     ["www.domain.com", "sitemaps", ["http://www.domain.com/sitemaps/site.xml", "http://www.domain.com/sitemaps/products.xml"]]
-      #     ["www.second.com", "sitemaps", ["http://www.second.com/sitemaps/site.xml", "http://www.second.com/sitemaps/tags.xml"]]
-      #   ]
+      # Array of SitemapResult
       def sitemaps
         @sitemaps ||= []
       end
