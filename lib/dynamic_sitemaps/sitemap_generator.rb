@@ -21,7 +21,7 @@ module DynamicSitemaps
     end
 
     def write_beginning
-      write '<?xml version="1.0" encoding="UTF-8"?>' + 
+      write '<?xml version="1.0" encoding="UTF-8"?>',
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
     end
 
@@ -52,8 +52,8 @@ module DynamicSitemaps
       write '</urlset>'
     end
 
-    def write(string)
-      file.puts string
+    def write(*lines)
+      file.puts lines
     end
 
     def handle_collection
