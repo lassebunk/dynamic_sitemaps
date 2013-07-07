@@ -37,10 +37,7 @@ module DynamicSitemaps
           @folder = args.first
           raise ArgumentError, "Folder can't be blank." if @folder.blank?
 
-          path = "#{DynamicSitemaps.path}/#{folder}"
-          if Dir.exists?(path)
-            FileUtils.rm_rf "#{path}/*"
-          end
+          FileUtils.rm_rf Dir.glob("#{DynamicSitemaps.path}/#{folder}/*")
         else
           # Ensure that the default folder is set and cleaned.
           folder DynamicSitemaps.folder if @folder.blank?
