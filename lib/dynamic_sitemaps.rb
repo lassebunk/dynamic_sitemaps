@@ -6,7 +6,7 @@ require "dynamic_sitemaps/index_generator"
 require "dynamic_sitemaps/sitemap_result"
 
 module DynamicSitemaps
-  DEFAULT_PER_PAGE = 1000
+  DEFAULT_PER_PAGE = 50000
   DEFAULT_FOLDER = "sitemaps"
   DEFAULT_INDEX_FILE_NAME = "sitemap.xml"
   DEFAULT_ALWAYS_GENERATE_INDEX = false
