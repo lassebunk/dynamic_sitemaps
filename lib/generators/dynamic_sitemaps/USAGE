@@ -1,0 +1,8 @@
+Description:
+    Generates a config file for DynamicSitemaps.
+
+Example:
+    rails generate dynamic_sitemaps:install
+
+    This will create:
+        config/sitemap.rb
