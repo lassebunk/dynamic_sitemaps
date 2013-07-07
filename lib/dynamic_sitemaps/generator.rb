@@ -4,11 +4,10 @@ module DynamicSitemaps
       def generate
         instance_eval open(DynamicSitemaps.config_path).read
         generate_index
-        ap sitemaps
       end
 
       def generate_index
-        # TODO based on #sitemaps
+        IndexGenerator.new(sitemaps).generate
       end
 
       def sitemap(*args, &block)

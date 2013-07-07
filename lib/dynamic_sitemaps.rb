@@ -2,6 +2,7 @@ require "dynamic_sitemaps/rails/engine"
 require "dynamic_sitemaps/sitemap"
 require "dynamic_sitemaps/generator"
 require "dynamic_sitemaps/sitemap_generator"
+require "dynamic_sitemaps/index_generator"
 require "dynamic_sitemaps/sitemap_result"
 
 module DynamicSitemaps
