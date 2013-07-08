@@ -6,7 +6,7 @@ Dynamic Sitemaps is designed to be very (very) simple so there's a lot you canno
 
 ## Version 2.0
 
-Version 2.0 makes it possible to make very large sitemaps (up to 2.5 billion URLs) in a fast and memory efficient way; it is be built for large amounts of data, i.e. millions of URLs without pushing your server to the limit, memory and CPU wise.
+Version 2.0 makes it possible to make very large sitemaps (up to 2.5 billion URLs) in a fast and memory efficient way; it is built for large amounts of data, i.e. millions of URLs without pushing your server to the limit, memory and CPU wise.
 
 Version 2.0 is not compatible with version 1.0 (although the configuration DSL looks somewhat the same) as version 2.0 generates static sitemap XML files whereas 1.0 generated them dynamically on each request (slow for large sitemaps).
 
