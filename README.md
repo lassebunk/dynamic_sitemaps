@@ -106,7 +106,7 @@ Therefore we use `Page.scoped` instead of the normal `Page.all`.
 
 ## Custom configuration
 
-You can configure different options of how DynamicSitemaps behaves, including xx.
+You can configure different options of how DynamicSitemaps behaves, including the sitemap path and index file name.
 
 In an initializer, e.g. `config/initializers/dynamic_sitemaps.rb`:
 
