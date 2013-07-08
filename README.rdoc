@@ -7,7 +7,7 @@ If the sitemap has more than 50.000 urls – or whatever you set it to using <co
 
 In your <em>Gemfile</em>:
 
-  gem 'dynamic_sitemaps'
+  gem 'dynamic_sitemaps', '1.0.8'
   
 Then run <code>bundle install</code>.
 
