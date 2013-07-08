@@ -85,9 +85,10 @@ end
 # automatically set <lastmod> to the date and time in page.updated_at.
 sitemap_for Page.scoped
 
-# For products with special sitemap name and priority
+# For products with special sitemap name and priority, and link to comments
 sitemap_for Product.published, name: :published_products do |product|
   url product, last_mod: product.updated_at, priority: (product.featured? ? 1.0 : 0.7)
+  url product_comments_url(product)
 end
 ```
 
