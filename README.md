@@ -98,7 +98,7 @@ sitemap_for Product.published, name: :published_products do |product|
 end
 ```
 
-This generates the sitemap files `site.xml`, `pages.xml`, and `products.xml` and links them together in the `sitemap.xml` index file, splitting them into multiple sitemap files if the number of URLs exceeds 50,000.
+This generates the sitemap files `site.xml`, `pages.xml`, and `published_products.xml` and links them together in the `sitemap.xml` index file, splitting them into multiple sitemap files if the number of URLs exceeds 50,000.
 
 The argument passed to `sitemap_for` needs to respond to [`#find_each`](http://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_each), like an ActiveRecord [Relation](http://api.rubyonrails.org/classes/ActiveRecord/Relation.html).
 This is to ensure that the records from the database are lazy loaded 1,000 at a time, so that it doesn't accidentally load millions of records in one call when the configuration file is read.
