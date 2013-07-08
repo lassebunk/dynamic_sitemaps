@@ -1,12 +1,22 @@
-Gem::Specification.new do |s|
-  s.name = "dynamic_sitemaps"
-  s.version = "1.0.8"
+# -*- encoding: utf-8 -*-
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'dynamic_sitemaps/version'
 
-  s.author = "Lasse Bunk"
-  s.email = "lassebunk@gmail.com"
-  s.description = "Dynamic Sitemaps is a plugin for Ruby on Rails that enables you to easily create flexible, dynamic sitemaps."
-  s.summary = "Dynamic sitemap generation plugin for Ruby on Rails."
-  s.homepage = "http://github.com/lassebunk/dynamic_sitemaps"
-  s.files = Dir['lib/**/*.rb'] + Dir['app/**/*']
-  s.require_paths = ["lib"]
+Gem::Specification.new do |gem|
+  gem.name          = "dynamic_sitemaps"
+  gem.version       = DynamicSitemaps::VERSION
+  gem.authors       = ["Lasse Bunk"]
+  gem.email         = ["lassebunk@gmail.com"]
+  gem.description   = %q{Dynamic Sitemaps is a plugin for Ruby on Rails that enables you to easily create flexible, dynamic sitemaps for Google, Bing, and Yahoo.}
+  gem.summary       = %q{Dynamic sitemap generation plugin for Ruby on Rails.}
+  gem.homepage      = "http://github.com/lassebunk/dynamic_sitemaps"
+  gem.license       = "MIT"
+
+  gem.files         = `git ls-files`.split($/)
+  gem.test_files    = gem.files.grep(%r{^test/})
+  gem.require_paths = ["lib"]
+
+  gem.add_development_dependency "rails", "~> 3.2.13"
+  gem.add_development_dependency "sqlite3"
 end
