@@ -70,7 +70,11 @@ See the below production example for inspiration on how to do this with [Capistr
 If a sitemap contains over 50,000 URLs, then by default, as specified by the [sitemaps.org](http://sitemaps.org) standard, DynamicSitemaps will split it into multiple sitemaps and generate an index file that will also be named `public/sitemaps/sitemap.xml` by default.
 The sitemap files will then be named `site.xml`, `site2.xml`, `site3.xml`, and so on, and the index file will link to these files using the host set with `host`.
 
-## Automatically mapping resources
+## Automatic sitemaps for resourceful routes
+
+DynamicSitemaps can automatically generate sitemaps for ActiveRecord models with the built-in Rails [resourceful routes](http://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default) (the ones you create using `routes :model_name`).
+
+Example:
 
 ```ruby
 host "www.example.com"
@@ -137,9 +141,116 @@ DynamicSitemaps.configure do |config|
 end
 ```
 
-## Production example
+## Production example with multiple domains, Capistrano, and Whenever
 
-TODO
+This is an example of a real production app that uses DynamicSitemaps with multiple sites and domains in one app, [Capistrano](https://github.com/capistrano/capistrano) for deployment, and [Whenever](https://github.com/javan/whenever) for crontab scheduling.
+
+### DynamicSitemaps configuration
+
+In `config/initializers/dynamic_sitemaps.rb`:
+
+```ruby
+DynamicSitemaps.configure do |config|
+  config.sitemap_ping_urls = -> { Site.all.map { |site| "http://#{site.domain}/sitemap.xml" } }
+end
+```
+
+### Sitemap setup
+
+In `config/sitemap.rb`:
+
+```ruby
+Site.all.each do |site|
+  folder "sitemaps/#{site.key}"
+  host site.domain
+
+  sitemap :site do
+    url root_url, priority: 1.0, change_freq: "daily"
+    url blog_posts_url
+    url tags_url
+  end
+
+  sitemap_for site.pages.where("slug != 'home'")
+  sitemap_for site.blog_posts.published
+  sitemap_for site.tags.scoped
+
+  sitemap_for site.products.where("type_id != ?", ProductType.find_by_key("unknown").id) do |product|
+    url product, last_mod: product.updated_at, priority: (product.featured? ? 1.0 : 0.7)
+  end
+end
+```
+
+### Routing the default sitemap
+
+#### Route for sitemap.xml and robots.txt
+
+In `config/routes.rb`:
+
+```ruby
+get "sitemap.xml" => "home#sitemap", format: :xml, as: :sitemap
+get "robots.txt" => "home#robots", format: :text, as: :robots
+```
+
+#### Controller
+
+In `app/controllers/home_controller.rb`:
+
+```ruby
+class HomeController < ApplicationController
+  # ...
+
+  def sitemap
+    path = Rails.root.join("public", "sitemaps", current_site.key, "sitemap.xml")
+    if File.exists?(path)
+      render xml: open(path).read
+    else
+      render text: "Sitemap not found.", status: :not_found
+    end
+  end
+  
+  def robots
+  end
+end
+```
+
+#### View for robots.txt
+
+In `app/views/home/robots.text.erb`:
+
+```html
+Sitemap: <%= sitemap_url %>
+```
+
+### Deployment with Capistrano
+
+[Capistrano](https://github.com/capistrano/capistrano) deployment configuration in `config/deploy.rb`:
+
+```ruby
+after "deploy:update_code", "sitemaps:create_symlink"
+
+namespace :sitemaps do
+  task :create_symlink, roles: :app do
+    run "mkdir -p #{shared_path}/sitemaps"
+    run "rm -rf #{release_path}/public/sitemaps"
+    run "ln -s #{shared_path}/sitemaps #{release_path}/public/sitemaps"
+  end
+end
+```
+
+For automatic crontab scheduling with [Whenever](https://github.com/javan/whenever), in `config/schedule.rb`:
+
+```ruby
+every 1.day, at: "6am" do
+  rake "sitemap:generate"
+end
+```
+
+This will automatically generate the sitemaps and ping Google and Bing every day at 6am using the sitemap URLs configured above.
+
+## Problems?
+
+If you encounter any problems with DynamicSitemaps, please create an [issue](https://github.com/lassebunk/dynamic_sitemaps/issues).
+If you want to fix the problem (please do :smile:), please see below.
 
 ## Contributing
 
