@@ -28,6 +28,8 @@ To generate a simple example config file in `config/sitemap.rb`:
 
     $ rails generate dynamic_sitemaps:install
 
+If you want to use version 1.0 (v1.0.8) of DynamicSitemaps, please see the [v1.0.8 tag](https://github.com/lassebunk/dynamic_sitemaps/tree/v1.0.8) of the project. Please note that this version isn't good for large sitemaps as it generates them dynamically on each request.
+
 ## Basic usage
 
 The configuration file in `config/sitemap.rb` goes like this (also see the production example below for more advance usage like multiple sites / hosts, etc.):
