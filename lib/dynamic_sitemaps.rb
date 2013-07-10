@@ -17,7 +17,7 @@ module DynamicSitemaps
   ]
 
   class << self
-    attr_writer :path, :folder, :index_file_name, :always_generate_index, :config_path, :search_engine_ping_urls
+    attr_writer :path, :folder, :index_file_name, :always_generate_index, :config_path, :per_page, :search_engine_ping_urls
 
     def generate_sitemap
       DynamicSitemaps::Generator.generate
@@ -32,6 +32,7 @@ module DynamicSitemaps
     #     config.index_file_name = "sitemap.xml"
     #     config.always_generate_index = false
     #     config.config_path = Rails.root.join("config", "sitemap.rb")
+    #     config.per_page = 50_000
     #   end
     # 
     # To ping search engines after generating the sitemap:
@@ -65,6 +66,10 @@ module DynamicSitemaps
 
     def config_path
       @config_path ||= Rails.root.join("config", "sitemap.rb").to_s
+    end
+
+    def per_page
+      @per_page ||= DEFAULT_PER_PAGE
     end
 
     def search_engine_ping_urls

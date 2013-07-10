@@ -36,7 +36,7 @@ module DynamicSitemaps
     end
 
     def per_page
-      @per_page ||= DynamicSitemaps::DEFAULT_PER_PAGE
+      @per_page ||= DynamicSitemaps.per_page
     end
 
     # Generates sitemap XML files based on this sitemap
