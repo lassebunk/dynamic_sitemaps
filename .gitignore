@@ -14,5 +14,7 @@ rdoc
 spec/reports
 test/tmp
 test/version_tmp
+test/sitemaps
+test/dummy/public/sitemaps
 tmp
 .DS_Store
