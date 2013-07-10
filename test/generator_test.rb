@@ -19,7 +19,7 @@ class GeneratorTest < ActiveSupport::TestCase
     DynamicSitemaps.reset! # Reset because test setup sets custom test settings. We want to test the default Rails settings.
     DynamicSitemaps.generate_sitemap
 
-    doc = Nokogiri::XML(open(Rails.root.join("public", "sitemaps", "sitemap.xml")).read)
+    doc = Nokogiri::XML(open(Rails.root.join("public", "sitemaps", "sitemap.xml")))
     assert_equal ({ "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9" }), doc.namespaces
     doc.remove_namespaces!
 
