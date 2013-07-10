@@ -12,7 +12,7 @@ class GeneratorTest < ActiveSupport::TestCase
   test "basic sitemap with default settings" do
     DynamicSitemaps.generate_sitemap
 
-    doc = Nokogiri::XML(open(Rails.root.join("public", "sitemaps", "sitemap.xml")))
+    doc = open_sitemap(remove_namespaces: false)
     assert_equal ({ "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9" }), doc.namespaces
     doc.remove_namespaces!
 
@@ -31,12 +31,10 @@ class GeneratorTest < ActiveSupport::TestCase
     DynamicSitemaps.always_generate_index = true
     DynamicSitemaps.generate_sitemap
 
-    doc = Nokogiri::XML(open(Rails.root.join("public", "sitemaps", "sitemap.xml")))
-    doc.remove_namespaces!
+    doc = open_sitemap
     assert_equal "http://www.mytest.com/sitemaps/site.xml", doc.xpath("sitemapindex/sitemap/loc").text
 
-    doc = Nokogiri::XML(open(Rails.root.join("public", "sitemaps", "site.xml")))
-    doc.remove_namespaces!
+    doc = open_sitemap(Rails.root.join("public", "sitemaps", "site.xml"))
     assert_equal "http://www.mytest.com/", doc.xpath("urlset/url/loc").text
   end
 
@@ -48,10 +46,24 @@ class GeneratorTest < ActiveSupport::TestCase
       end
     end
 
-    doc = Nokogiri::XML(open(Rails.root.join("public", "sitemaps", "sitemap.xml")))
-    doc.remove_namespaces!
+    doc = open_sitemap
     
     assert_equal 2, doc.xpath("urlset/url").count
     assert_equal "http://www.test.com/test2", doc.xpath("urlset/url/loc").last.text
   end
+
+private
+
+  # Opens a sitemap file using Nokogiri::XML and removes namespaces by default.
+  # 
+  #   open_sitemap # => Nokogiri::XML with the contents of <rails root>/public/sitemaps/sitemap.xml
+  #   open_sitemap "/path/to/sitemap.xml"
+  #   open_sitemap "/path/to/sitemap.xml", remove_namespaces: false
+  def open_sitemap(*args)
+    options = args.extract_options!
+    doc = Nokogiri::XML(open(args[0] || Rails.root.join("public", "sitemaps", "sitemap.xml")))
+    doc.remove_namespaces! unless options[:remove_namespaces] == false
+    doc
+  end
+
 end
