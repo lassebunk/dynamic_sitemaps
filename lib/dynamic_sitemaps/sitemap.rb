@@ -7,14 +7,6 @@ module DynamicSitemaps
     #   Sitemap.new(:site) do
     #     url root_url
     #   end
-    # 
-    # Using an ActiveRecord relation:
-    # 
-    #   Sitemap.new(:site, Product.visible) do |product|
-    #     url product
-    #     url product_editions_path(product)
-    #   end
-    
     def initialize(*args, &block)
       if args.first.is_a?(Symbol)
         @name = args.shift
