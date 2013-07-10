@@ -16,12 +16,13 @@ class GeneratorTest < ActiveSupport::TestCase
     assert_equal ({ "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9" }), doc.namespaces
     doc.remove_namespaces!
 
-    url = doc.xpath("urlset/url")
-    assert_equal 1, url.count
-    assert_equal "http://www.mytest.com/", url.xpath("loc").text
-    assert_equal "2013-07-10T03:46:23+00:00", url.xpath("lastmod").text
-    assert_equal "daily", url.xpath("changefreq").text
-    assert_equal "1.0", url.xpath("priority").text
+    doc.xpath("urlset/url").tap do |url|
+      assert_equal 1, url.count
+      assert_equal "http://www.mytest.com/", url.xpath("loc").text
+      assert_equal "2013-07-10T03:46:23+00:00", url.xpath("lastmod").text
+      assert_equal "daily", url.xpath("changefreq").text
+      assert_equal "1.0", url.xpath("priority").text
+    end
 
     # Test that it only keeps sitemap.xml when there's no need for an index
     assert !File.exists?(Rails.root.join("public", "sitemaps", "site.xml"))
