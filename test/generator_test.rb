@@ -29,5 +29,7 @@ class GeneratorTest < ActiveSupport::TestCase
     assert_equal "2013-10-07T05:46:23+02:00", url.xpath("lastmod").text
     assert_equal "daily", url.xpath("changefreq").text
     assert_equal "1.0", url.xpath("priority").text
+
+    # TODO: Assert that index does not exist
   end
 end
