@@ -11,6 +11,7 @@ module DynamicSitemaps
     end
 
     def generate
+      ensure_host!
       write_beginning
       write_urls
       write_end
@@ -104,6 +105,10 @@ module DynamicSitemaps
 
     def host
       sitemap.host
+    end
+
+    def ensure_host!
+      raise "No host specified. Please specify a host using `host \"www.mydomain.com\"` at the top of your sitemap configuration file." if sitemap.host.blank?
     end
 
     def file
