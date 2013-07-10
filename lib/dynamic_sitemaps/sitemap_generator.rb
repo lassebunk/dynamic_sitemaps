@@ -146,7 +146,7 @@ module DynamicSitemaps
       if date.is_a?(Date)
         date.strftime("%Y-%m-%d")
       else
-        date.to_datetime.strftime("%Y-%m-%dT%H:%M:%S%:z")
+        date.to_datetime.utc.strftime("%Y-%m-%dT%H:%M:%S%:z")
       end
     end
   end
