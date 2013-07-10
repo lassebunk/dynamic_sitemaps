@@ -14,10 +14,12 @@
 ActiveRecord::Schema.define(:version => 20130211190343) do
 
   create_table "products", :force => true do |t|
-    t.boolean  "featured",   :default => false
+    t.string   "name"
     t.string   "slug"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
+
+  add_index "products", ["slug"], :name => "index_products_on_slug"
 
 end
