@@ -51,7 +51,7 @@ module DynamicSitemaps
     end
 
     def path
-      @path ||= Rails.root.join("public")
+      @path ||= Rails.root.join("public").to_s
     end
 
     def index_file_name
@@ -64,7 +64,7 @@ module DynamicSitemaps
     end
 
     def config_path
-      @config_path ||= Rails.root.join("config", "sitemap.rb")
+      @config_path ||= Rails.root.join("config", "sitemap.rb").to_s
     end
 
     def search_engine_ping_urls
