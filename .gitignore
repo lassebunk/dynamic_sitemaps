@@ -1,5 +1,7 @@
 *.gem
 *.rbc
+*.log
+*.sqlite3
 .bundle
 .config
 .yardoc
