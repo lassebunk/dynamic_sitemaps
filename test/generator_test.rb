@@ -9,7 +9,7 @@ class GeneratorTest < ActiveSupport::TestCase
     DynamicSitemaps.reset!
   end
 
-  test "generation of basic sitemap with default settings" do
+  test "basic sitemap with default settings" do
     DynamicSitemaps.generate_sitemap
 
     doc = Nokogiri::XML(open(Rails.root.join("public", "sitemaps", "sitemap.xml")))
@@ -40,7 +40,7 @@ class GeneratorTest < ActiveSupport::TestCase
     assert_equal "http://www.mytest.com/", doc.xpath("urlset/url/loc").text
   end
 
-  test "generation of sitemap based on block" do
+  test "sitemap based on block" do
     DynamicSitemaps.generate_sitemap do
       sitemap :test do
         url "http://www.test.com/test"
