@@ -52,6 +52,78 @@ class GeneratorTest < ActiveSupport::TestCase
     assert_equal "http://www.test.com/test2", doc.xpath("urlset/url/loc").last.text
   end
 
+  test "resourceful routes" do
+    Product.create.tap do |product|
+      product.update_column :updated_at, 213434.seconds.ago
+    end
+    Product.create slug: "test-slug"
+
+    DynamicSitemaps.generate_sitemap do
+      sitemap_for Product.scoped
+    end
+
+    doc = open_sitemap
+    urls = doc.xpath("urlset/url")
+    assert_equal 2, urls.count
+
+    urls.first.tap do |url|
+      assert_equal "http://www.mytest.com/products/1", url.xpath("loc").text
+      assert_equal "2013-07-07T16:29:09+00:00", url.xpath("lastmod").text
+      assert_nil url.at_xpath("priority")
+      assert_nil url.at_xpath("changefreq")
+    end
+
+    urls.last.tap do |url|
+      assert_equal "http://www.mytest.com/products/test-slug", url.xpath("loc").text
+      assert_equal "2013-07-10T03:46:23+00:00", url.xpath("lastmod").text
+      assert_nil url.at_xpath("priority")
+      assert_nil url.at_xpath("changefreq")
+    end
+  end
+
+  test "resourceful routes with custom urls" do
+    Product.create featured: true
+    Product.create featured: false
+
+    DynamicSitemaps.generate_sitemap do
+      sitemap_for Product.scoped do |product|
+        url product, last_mod: 1234.seconds.ago, priority: (product.featured? ? 1.0 : nil), change_freq: "weekly"
+        url product_comments_url(product)
+      end
+    end
+
+    doc = open_sitemap
+    urls = doc.xpath("urlset/url")
+    assert_equal 4, urls.count
+
+    urls[0].tap do |url|
+      assert_equal "http://www.mytest.com/products/1", url.xpath("loc").text
+      assert_equal "2013-07-10T03:25:49+00:00", url.xpath("lastmod").text
+      assert_equal "weekly", url.xpath("changefreq").text
+      assert_equal "1.0", url.xpath("priority").text
+    end
+
+    urls[1].tap do |url|
+      assert_equal "http://www.mytest.com/products/1/comments", url.xpath("loc").text
+      assert_nil url.at_xpath("lastmod")
+      assert_nil url.at_xpath("changefreq")
+      assert_nil url.at_xpath("priority")
+    end
+
+    urls[2].tap do |url|
+      assert_equal "http://www.mytest.com/products/2", url.xpath("loc").text
+      assert_nil url.at_xpath("priority")
+    end
+  end
+
+  test "sitemap_for complains if not given a relation" do
+    assert_raises ArgumentError do
+      DynamicSitemaps.generate_sitemap do
+        sitemap_for Product.all
+      end
+    end
+  end
+
 private
 
   # Opens a sitemap file using Nokogiri::XML and removes namespaces by default.
