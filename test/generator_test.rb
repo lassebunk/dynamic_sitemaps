@@ -27,6 +27,10 @@ class GeneratorTest < ActiveSupport::TestCase
     assert !File.exists?(Rails.root.join("public", "sitemaps", "site.xml"))
   end
 
+  test "index" do
+    # TODO: Test index generation
+  end
+
   test "always generate index" do
     DynamicSitemaps.always_generate_index = true
     DynamicSitemaps.generate_sitemap
