@@ -32,4 +32,19 @@ class GeneratorTest < ActiveSupport::TestCase
 
     # TODO: Assert that index does not exist
   end
+
+  test "generation of sitemap based on block" do
+    DynamicSitemaps.generate_sitemap do
+      sitemap :test do
+        url "http://www.test.com/test"
+        url "http://www.test.com/test2"
+      end
+    end
+
+    doc = Nokogiri::XML(open(DynamicSitemaps.path + "/sitemaps/sitemap.xml"))
+    doc.remove_namespaces!
+    
+    assert_equal 2, doc.xpath("urlset/url").count
+    assert_equal "http://www.test.com/test2", doc.xpath("urlset/url/loc").last.text
+  end
 end
