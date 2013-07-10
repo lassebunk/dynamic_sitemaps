@@ -137,6 +137,29 @@ class GeneratorTest < ActiveSupport::TestCase
     end
   end
 
+  test "large sitemap" do
+    DynamicSitemaps.generate_sitemap do
+      host "www.mydomain.com"
+      sitemap :large do
+        1.upto(123456) do |num|
+          url "http://#{host}/test/#{num}"
+        end
+      end
+    end
+
+    doc = open_sitemap
+    assert_equal 3, doc.xpath("sitemapindex/sitemap/loc").count
+
+    doc = open_sitemap(Rails.root.join("public/sitemaps/large.xml"))
+    assert_equal 50000, doc.xpath("urlset/url").count
+
+    doc = open_sitemap(Rails.root.join("public/sitemaps/large2.xml"))
+    assert_equal 50000, doc.xpath("urlset/url").count
+
+    doc = open_sitemap(Rails.root.join("public/sitemaps/large3.xml"))
+    assert_equal 23456, doc.xpath("urlset/url").count
+  end
+
 private
 
   # Opens a sitemap file using Nokogiri::XML and removes namespaces by default.
