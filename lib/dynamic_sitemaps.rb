@@ -19,8 +19,10 @@ module DynamicSitemaps
   class << self
     attr_writer :index_file_name, :always_generate_index, :per_page, :search_engine_ping_urls
 
-    def generate_sitemap
-      DynamicSitemaps::Generator.generate
+    # Generates the sitemap(s) and index based on the configuration file specified in DynamicSitemaps.config_path.
+    # If you supply a block, that block is evaluated instead of the configuration file.
+    def generate_sitemap(&block)
+      DynamicSitemaps::Generator.new.generate(&block)
     end
 
     # Configure DynamicSitemaps.
