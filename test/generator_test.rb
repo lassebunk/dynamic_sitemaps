@@ -40,6 +40,7 @@ class GeneratorTest < ActiveSupport::TestCase
 
   test "sitemap based on block" do
     DynamicSitemaps.generate_sitemap do
+      host "www.test.com"
       sitemap :test do
         url "http://www.test.com/test"
         url "http://www.test.com/test2"
@@ -59,6 +60,7 @@ class GeneratorTest < ActiveSupport::TestCase
     Product.create slug: "test-slug"
 
     DynamicSitemaps.generate_sitemap do
+      host "www.mytest.com"
       sitemap_for Product.scoped
     end
 
@@ -86,6 +88,7 @@ class GeneratorTest < ActiveSupport::TestCase
     Product.create featured: false
 
     DynamicSitemaps.generate_sitemap do
+      host "www.mytest.com"
       sitemap_for Product.scoped do |product|
         url product, last_mod: 1234.seconds.ago, priority: (product.featured? ? 1.0 : nil), change_freq: "weekly"
         url product_comments_url(product)
@@ -119,6 +122,7 @@ class GeneratorTest < ActiveSupport::TestCase
   test "sitemap_for complains if not given a relation" do
     assert_raises ArgumentError do
       DynamicSitemaps.generate_sitemap do
+        host "www.mytest.com"
         sitemap_for Product.all
       end
     end
