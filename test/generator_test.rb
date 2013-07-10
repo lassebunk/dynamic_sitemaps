@@ -9,6 +9,10 @@ class GeneratorTest < ActiveSupport::TestCase
     DynamicSitemaps.reset!
   end
 
+  teardown do
+    Timecop.return
+  end
+
   test "basic sitemap with default settings" do
     DynamicSitemaps.generate_sitemap
 
