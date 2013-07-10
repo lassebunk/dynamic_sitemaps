@@ -1,8 +1,14 @@
 module DynamicSitemaps
   class Generator
     class << self
-      def generate
-        instance_eval open(DynamicSitemaps.config_path).read
+      # Generates the sitemap(s) and index based on the configuration file specified in DynamicSitemaps.config_path.
+      # If you supply a block, that block is evaluated instead of the configuration file.
+      def generate(&block)
+        if block
+          instance_eval &block
+        else
+          instance_eval open(DynamicSitemaps.config_path).read
+        end
         generate_index
       end
 
