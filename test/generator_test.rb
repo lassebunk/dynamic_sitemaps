@@ -23,7 +23,21 @@ class GeneratorTest < ActiveSupport::TestCase
     assert_equal "daily", url.xpath("changefreq").text
     assert_equal "1.0", url.xpath("priority").text
 
-    # TODO: Assert that index does not exist
+    # Test that it only keeps sitemap.xml when there's no need for an index
+    assert !File.exists?(Rails.root.join("public", "sitemaps", "site.xml"))
+  end
+
+  test "always generate index" do
+    DynamicSitemaps.always_generate_index = true
+    DynamicSitemaps.generate_sitemap
+
+    doc = Nokogiri::XML(open(Rails.root.join("public", "sitemaps", "sitemap.xml")))
+    doc.remove_namespaces!
+    assert_equal "http://www.mytest.com/sitemaps/site.xml", doc.xpath("sitemapindex/sitemap/loc").text
+
+    doc = Nokogiri::XML(open(Rails.root.join("public", "sitemaps", "site.xml")))
+    doc.remove_namespaces!
+    assert_equal "http://www.mytest.com/", doc.xpath("urlset/url/loc").text
   end
 
   test "generation of sitemap based on block" do
