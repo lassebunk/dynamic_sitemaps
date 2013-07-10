@@ -85,5 +85,10 @@ module DynamicSitemaps
       end
       @sitemap_ping_urls = array_or_proc
     end
+
+    # Resets all instance variables. Used for testing.
+    def reset!
+      instance_variables.each { |var| remove_instance_variable var }
+    end
   end
 end
