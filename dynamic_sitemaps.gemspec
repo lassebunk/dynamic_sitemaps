@@ -21,4 +21,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "sqlite3"
   gem.add_development_dependency "nokogiri", "~> 1.6.0"
   gem.add_development_dependency "timecop", "~> 0.6.1"
+  gem.add_development_dependency "webmock", "~> 1.13.0"
 end
