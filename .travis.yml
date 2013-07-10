@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+  - 2.0.0
+  - 1.9.3
+before_script:
+  - "cd test/dummy; rake db:migrate; rake db:test:prepare; cd ../.."
+notifications:
+  email: false

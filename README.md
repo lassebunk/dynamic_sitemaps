@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/lassebunk/dynamic_sitemaps.png)](http://travis-ci.org/lassebunk/dynamic_sitemaps)
+
 # DynamicSitemaps
 
 Dynamic Sitemaps is a plugin for Ruby on Rails that enables you to easily create flexible, dynamic sitemaps. It creates sitemaps in the [sitemaps.org](http://sitemaps.org) standard which is supported by several crawlers including Google, Bing, and Yahoo.
