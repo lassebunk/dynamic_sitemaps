@@ -14,16 +14,6 @@ class GeneratorTest < ActiveSupport::TestCase
     DynamicSitemaps.reset!
   end
 
-  test "defaults" do
-    DynamicSitemaps.reset!
-    assert_equal Rails.root.join("public").to_s, DynamicSitemaps.path
-    assert_equal "sitemaps", DynamicSitemaps.folder
-    assert_equal "sitemap.xml", DynamicSitemaps.index_file_name
-    assert !DynamicSitemaps.always_generate_index
-    assert_equal Rails.root.join("config", "sitemap.rb").to_s, DynamicSitemaps.config_path
-    assert_equal 50000, DynamicSitemaps.per_page
-  end
-
   test "generation of basic sitemap with default settings" do
     FileUtils.rm_rf Rails.root.join("public", "sitemaps")
     DynamicSitemaps.reset! # Reset because test setup sets custom test settings. We want to test the default Rails settings.
