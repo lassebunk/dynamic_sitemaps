@@ -21,6 +21,7 @@ class GeneratorTest < ActiveSupport::TestCase
     assert_equal "sitemap.xml", DynamicSitemaps.index_file_name
     assert !DynamicSitemaps.always_generate_index
     assert_equal Rails.root.join("config", "sitemap.rb").to_s, DynamicSitemaps.config_path
+    assert_equal 50000, DynamicSitemaps.per_page
   end
 
   test "generate basic sitemap with default settings" do
