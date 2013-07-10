@@ -19,4 +19,6 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency "rails", "~> 3.2.13"
   gem.add_development_dependency "sqlite3"
+  gem.add_development_dependency "nokogiri", "~> 1.6.0"
+  gem.add_development_dependency "timecop", "~> 0.6.1"
 end
