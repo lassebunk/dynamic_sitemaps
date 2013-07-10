@@ -5,18 +5,11 @@ require "timecop"
 class GeneratorTest < ActiveSupport::TestCase
   setup do
     Timecop.freeze Time.new(2013, 10, 7, 13, 46, 23, "+10:00")
-    path = File.dirname(__FILE__) + "/sitemaps"
-    FileUtils.rm_rf path
-    DynamicSitemaps.path = path
-  end
-
-  teardown do
+    FileUtils.rm_rf Rails.root.join("public", "sitemaps")
     DynamicSitemaps.reset!
   end
 
   test "generation of basic sitemap with default settings" do
-    FileUtils.rm_rf Rails.root.join("public", "sitemaps")
-    DynamicSitemaps.reset! # Reset because test setup sets custom test settings. We want to test the default Rails settings.
     DynamicSitemaps.generate_sitemap
 
     doc = Nokogiri::XML(open(Rails.root.join("public", "sitemaps", "sitemap.xml")))
@@ -41,7 +34,7 @@ class GeneratorTest < ActiveSupport::TestCase
       end
     end
 
-    doc = Nokogiri::XML(open(DynamicSitemaps.path + "/sitemaps/sitemap.xml"))
+    doc = Nokogiri::XML(open(Rails.root.join("public", "sitemaps", "sitemap.xml")))
     doc.remove_namespaces!
     
     assert_equal 2, doc.xpath("urlset/url").count
