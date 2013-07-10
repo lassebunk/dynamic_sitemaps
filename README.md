@@ -2,7 +2,7 @@
 
 # DynamicSitemaps
 
-Dynamic Sitemaps is a plugin for Ruby on Rails that enables you to easily create flexible, dynamic sitemaps. It creates sitemaps in the [sitemaps.org](http://sitemaps.org) standard which is supported by several crawlers including Google, Bing, and Yahoo.
+Dynamic Sitemaps is a plugin for [Ruby on Rails](http://rubyonrails.org) that enables you to easily create flexible, dynamic sitemaps. It creates sitemaps in the [sitemaps.org](http://sitemaps.org) standard which is supported by several crawlers including Google, Bing, and Yahoo.
 
 Dynamic Sitemaps is designed to be very (very) simple so there's a lot you cannot do, but possibly don't need (I didn't). If you need an advanced sitemap generator, please see Karl Varga's [SitemapGenerator](https://github.com/kjvarga/sitemap_generator).
 
@@ -11,6 +11,10 @@ Dynamic Sitemaps is designed to be very (very) simple so there's a lot you canno
 Version 2.0 makes it possible to make very large sitemaps (up to 2.5 billion URLs) in a fast and memory efficient way; it is built for large amounts of data, i.e. millions of URLs without pushing your server to the limit, memory and CPU wise.
 
 Version 2.0 is not compatible with version 1.0 (although the configuration DSL looks somewhat the same) as version 2.0 generates static sitemap XML files whereas 1.0 generated them dynamically on each request (slow for large sitemaps).
+
+## Requirements
+
+DynamicSitemaps is tested in Rails 3.2.13 using Ruby 1.9.3 and 2.0.0, but should work in other versions of Rails 3 and above and Ruby 1.9 and above. Please create an [issue](https://github.com/lassebunk/dynamic_sitemaps/issues) if you encounter any problems.
 
 ## Installation
 
