@@ -17,7 +17,7 @@ module DynamicSitemaps
   ]
 
   class << self
-    attr_writer :path, :folder, :index_file_name, :always_generate_index, :config_path, :per_page, :search_engine_ping_urls
+    attr_writer :index_file_name, :always_generate_index, :per_page, :search_engine_ping_urls
 
     def generate_sitemap
       DynamicSitemaps::Generator.generate
@@ -51,8 +51,18 @@ module DynamicSitemaps
       @folder ||= DEFAULT_FOLDER
     end
 
+    def folder=(new_folder)
+      raise ArgumentError, "DynamicSitemaps.folder can't be blank." if new_folder.blank?
+      @folder = new_folder
+    end
+
     def path
       @path ||= Rails.root.join("public").to_s
+    end
+
+    def path=(new_path)
+      raise ArgumentError, "DynamicSitemaps.path can't be blank." if new_path.blank?
+      @path = new_path.to_s
     end
 
     def index_file_name
@@ -66,6 +76,11 @@ module DynamicSitemaps
 
     def config_path
       @config_path ||= Rails.root.join("config", "sitemap.rb").to_s
+    end
+
+    def config_path=(new_path)
+      raise ArgumentError, "DynamicSitemaps.config_path can't be blank." if new_path.blank?
+      @config_path = new_path.to_s
     end
 
     def per_page
