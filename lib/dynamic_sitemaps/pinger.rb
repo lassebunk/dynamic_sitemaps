@@ -1,7 +1,9 @@
 module DynamicSitemaps
   class Pinger
     class << self
-      def ping_search_engines(sitemap_urls)
+      def ping_search_engines_with(sitemap_urls)
+        sitemap_urls = [sitemap_urls] unless sitemap_urls.is_a?(Array)
+
         if sitemap_urls.any? && ping_for_environment?(Rails.env)
           puts "Pinging search engines..."
 
