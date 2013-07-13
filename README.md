@@ -141,9 +141,6 @@ DynamicSitemaps.configure do |config|
   # Default is Google and Bing
   config.search_engine_ping_urls << "http://customsearchengine.com/ping?url=%s"
 
-  # Or dynamically, to ensure that the sites are loaded on each call
-  # and not just when the initializer is first run
-  config.sitemap_ping_urls = -> { Site.all.map { |site| "http://#{site.domain}/sitemap.xml" } }
 end
 ```
 
