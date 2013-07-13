@@ -160,6 +160,28 @@ class GeneratorTest < ActiveSupport::TestCase
     assert_equal 23456, doc.xpath("urlset/url").count
   end
 
+  test "pinging search engines" do
+    stub_request :get, //
+    DynamicSitemaps.ping_environments << "test"
+
+    DynamicSitemaps.generate_sitemap do
+      ["www.test.com", "www.example.com"].each do |domain|
+        host domain
+        sitemap :site do
+          url root_url
+        end
+        ping_with "http://#{host}/sitemap.xml"
+      end
+    end
+
+    ["http://www.google.com/webmasters/sitemaps/ping?sitemap=http://www.test.com/sitemap.xml",
+     "http://www.bing.com/webmaster/ping.aspx?siteMap=http://www.test.com/sitemap.xml",
+     "http://www.google.com/webmasters/sitemaps/ping?sitemap=http://www.example.com/sitemap.xml",
+     "http://www.bing.com/webmaster/ping.aspx?siteMap=http://www.example.com/sitemap.xml"].each do |url|
+      assert_requested :get, url
+    end
+  end
+
 private
 
   # Opens a sitemap file using Nokogiri::XML and removes namespaces by default.
