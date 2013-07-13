@@ -1,8 +1,7 @@
 module DynamicSitemaps
   class Pinger
     class << self
-      def ping_search_engines
-        sitemap_urls = DynamicSitemaps.sitemap_ping_urls
+      def ping_search_engines(sitemap_urls)
         if sitemap_urls.any?
           puts "Pinging search engines..."
 
