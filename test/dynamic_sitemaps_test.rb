@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class DynamicSitemapsTest < ActiveSupport::TestCase
-  teardown do
+  setup do
     DynamicSitemaps.reset!
   end
 
