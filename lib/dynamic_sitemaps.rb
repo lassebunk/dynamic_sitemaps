@@ -101,11 +101,9 @@ module DynamicSitemaps
       end
     end
 
+    # Removed in version 2.0.0.beta2
     def sitemap_ping_urls=(array_or_proc)
-      unless array_or_proc.is_a?(Array) || array_or_proc.is_a?(Proc)
-        raise "Unknown type #{array_or_proc.class.name} for sitemap_ping_urls."
-      end
-      @sitemap_ping_urls = array_or_proc
+      raise "sitemap_ping_urls has been removed. Please use `ping \"http://example.com/sitemap.xml\"` in config/sitemap.rb instead."
     end
 
     # Resets all instance variables. Used for testing.
