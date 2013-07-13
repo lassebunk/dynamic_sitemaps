@@ -140,9 +140,6 @@ In e.g. `config/initializers/dynamic_sitemaps.rb`:
 DynamicSitemaps.configure do |config|
   # Default is Google and Bing
   config.search_engine_ping_urls << "http://customsearchengine.com/ping?url=%s"
-  
-  # Which URLs to tell the search engines about
-  config.sitemap_ping_urls = ["http://www.domain.com/sitemap.xml"]
 
   # Or dynamically, to ensure that the sites are loaded on each call
   # and not just when the initializer is first run

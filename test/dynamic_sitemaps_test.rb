@@ -33,4 +33,10 @@ class DynamicSitemapsTest < ActiveSupport::TestCase
       DynamicSitemaps.config_path = ""
     end
   end
+
+  test "raises error when using old sitemap ping urls" do
+    assert_raises RuntimeError do
+      DynamicSitemaps.sitemap_ping_urls = ["http://test.com/sitemap.xml"]
+    end
+  end
 end
