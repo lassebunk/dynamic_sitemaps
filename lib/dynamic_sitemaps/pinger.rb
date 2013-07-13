@@ -5,13 +5,13 @@ module DynamicSitemaps
         sitemap_urls = [sitemap_urls] unless sitemap_urls.is_a?(Array)
 
         if sitemap_urls.any? && ping_for_environment?(Rails.env)
-          puts "Pinging search engines..."
+          Logger.info "Pinging search engines..."
 
           sitemap_urls.each do |url|
             ping_search_engines_with_sitemap_url url
           end
 
-          puts "Done pinging search engines."
+          Logger.info "Done pinging search engines."
         end
       end
 
@@ -24,11 +24,11 @@ module DynamicSitemaps
       end
 
       def ping(url)
-        puts "Pinging #{url} ..."
+        Logger.info "Pinging #{url} ..."
         begin
           Net::HTTP.get(URI.parse(url))
         rescue Exception => e
-          puts "Failed to ping #{url} : #{e}"
+          Logger.warn "Failed to ping #{url} : #{e}"
         end
       end
 

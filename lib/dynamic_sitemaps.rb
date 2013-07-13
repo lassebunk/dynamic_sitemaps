@@ -5,6 +5,7 @@ require "dynamic_sitemaps/sitemap_generator"
 require "dynamic_sitemaps/index_generator"
 require "dynamic_sitemaps/sitemap_result"
 require "dynamic_sitemaps/pinger"
+require "dynamic_sitemaps/logger"
 
 module DynamicSitemaps
   DEFAULT_PER_PAGE = 50000

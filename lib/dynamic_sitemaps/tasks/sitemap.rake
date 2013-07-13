@@ -1,8 +1,8 @@
 namespace :sitemap do
   task :generate => :environment do
     start_time = Time.now
-    puts "Generating sitemap..."
+    DynamicSitemaps::Logger.info "Generating sitemap..."
     DynamicSitemaps.generate_sitemap
-    puts "Done generating sitemap in #{Time.now - start_time} seconds."
+    DynamicSitemaps::Logger.info "Done generating sitemap in #{Time.now - start_time} seconds."
   end
 end
