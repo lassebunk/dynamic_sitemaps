@@ -89,7 +89,7 @@ module DynamicSitemaps
     end
 
     def search_engine_ping_urls
-      @search_engine_ping_urls ||= SEARCH_ENGINE_PING_URLS
+      @search_engine_ping_urls ||= SEARCH_ENGINE_PING_URLS.dup
     end
 
     def ping_environments
