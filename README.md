@@ -47,6 +47,9 @@ host "www.example.com"
 sitemap :site do
   url root_url, last_mod: Time.now, change_freq: "daily", priority: 1.0
 end
+
+# Pings search engines after generation has finished
+ping_with "http://#{host}/sitemap.xml"
 ```
 
 The host is needed to generate the URLs because the rake task doesn't know anything about the host being used.
@@ -134,7 +137,19 @@ end
 
 DynamicSitemaps can automatically ping Google and Bing (and other search engines you specify) with the sitemap when the generation finishes.
 
-In e.g. `config/initializers/dynamic_sitemaps.rb`:
+In `config/sitemap.rb`:
+
+```ruby
+host "www.example.com"
+
+sitemap :site do
+  url root_url
+end
+
+ping_with "http://#{host}/sitemap.xml"
+```
+
+To customize it, in e.g. `config/initializers/dynamic_sitemaps.rb`:
 
 ```ruby
 DynamicSitemaps.configure do |config|
@@ -149,16 +164,6 @@ end
 ## Production example with multiple domains, Capistrano, and Whenever
 
 This is an example of a real production app that uses DynamicSitemaps with multiple sites and domains in one app, [Capistrano](https://github.com/capistrano/capistrano) for deployment, and [Whenever](https://github.com/javan/whenever) for crontab scheduling.
-
-### DynamicSitemaps configuration
-
-In `config/initializers/dynamic_sitemaps.rb`:
-
-```ruby
-DynamicSitemaps.configure do |config|
-  config.sitemap_ping_urls = -> { Site.all.map { |site| "http://#{site.domain}/sitemap.xml" } }
-end
-```
 
 ### Sitemap setup
 
@@ -182,6 +187,8 @@ Site.all.each do |site|
   sitemap_for site.products.where("type_id != ?", ProductType.find_by_key("unknown").id) do |product|
     url product, last_mod: product.updated_at, priority: (product.featured? ? 1.0 : 0.7)
   end
+
+  ping_with "http://#{host}/sitemap.xml"
 end
 ```
 

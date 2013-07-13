@@ -9,10 +9,15 @@ module DynamicSitemaps
         instance_eval open(DynamicSitemaps.config_path).read
       end
       generate_index
+      ping_search_engines
     end
 
     def generate_index
       IndexGenerator.new(sitemaps).generate
+    end
+
+    def ping_search_engines
+      Pinger.ping_search_engines_with ping_urls
     end
 
     def sitemap(*args, &block)
@@ -37,6 +42,11 @@ module DynamicSitemaps
       @sitemaps ||= []
     end
 
+    # URLs to ping after generation
+    def ping_urls
+      @ping_urls ||= []
+    end
+
     def host(*args)
       if args.any?
         @host = args.first
@@ -44,6 +54,11 @@ module DynamicSitemaps
       else
         @host
       end
+    end
+
+    # Adds a sitemap URL to ping search engines with after generation.
+    def ping_with(sitemap_url)
+      ping_urls << sitemap_url
     end
 
     def folder(*args)
