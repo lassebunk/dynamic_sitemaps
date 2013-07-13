@@ -6,7 +6,7 @@ module DynamicSitemaps
       if block
         instance_eval &block
       else
-        instance_eval open(DynamicSitemaps.config_path).read
+        instance_eval open(DynamicSitemaps.config_path).read, DynamicSitemaps.config_path
       end
       generate_index
       ping_search_engines
