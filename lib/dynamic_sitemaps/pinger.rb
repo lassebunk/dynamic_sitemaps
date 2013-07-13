@@ -2,7 +2,7 @@ module DynamicSitemaps
   class Pinger
     class << self
       def ping_search_engines(sitemap_urls)
-        if sitemap_urls.any?
+        if sitemap_urls.any? && ping_for_environment?(Rails.env)
           puts "Pinging search engines..."
 
           sitemap_urls.each do |url|
@@ -28,6 +28,10 @@ module DynamicSitemaps
         rescue Exception => e
           puts "Failed to ping #{url} : #{e}"
         end
+      end
+
+      def ping_for_environment?(env)
+        DynamicSitemaps.ping_environments.map(&:to_s).include?(env.to_s)
       end
     end
   end

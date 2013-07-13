@@ -15,9 +15,10 @@ module DynamicSitemaps
     "http://www.google.com/webmasters/sitemaps/ping?sitemap=%s",
     "http://www.bing.com/webmaster/ping.aspx?siteMap=%s"
   ]
+  DEFAULT_PING_ENVIRONMENTS = ["production"]
 
   class << self
-    attr_writer :index_file_name, :always_generate_index, :per_page, :search_engine_ping_urls
+    attr_writer :index_file_name, :always_generate_index, :per_page, :search_engine_ping_urls, :ping_environments
 
     # Generates the sitemap(s) and index based on the configuration file specified in DynamicSitemaps.config_path.
     # If you supply a block, that block is evaluated instead of the configuration file.
@@ -41,9 +42,7 @@ module DynamicSitemaps
     # 
     #   DynamicSitemaps.configure do |config|
     #     config.search_engine_ping_urls << "http://customsearchengine.com/ping?url=%s" # Default is Google and Bing
-    #     config.sitemap_ping_urls = ["http://www.domain.com/sitemap.xml"]
-    #     # or dynamically:
-    #     config.sitemap_ping_urls = -> { Site.all.map { |site| "http://#{site.domain}/sitemap.xml" } }
+    #     config.ping_environments << "staging" # Default is production
     #   end
     def configure
       yield self
@@ -93,12 +92,8 @@ module DynamicSitemaps
       @search_engine_ping_urls ||= SEARCH_ENGINE_PING_URLS
     end
 
-    def sitemap_ping_urls
-      case @sitemap_ping_urls
-      when Array then @sitemap_ping_urls
-      when Proc then @sitemap_ping_urls.call
-      else []
-      end
+    def ping_environments
+      @ping_environments ||= DEFAULT_PING_ENVIRONMENTS.dup
     end
 
     # Removed in version 2.0.0.beta2
