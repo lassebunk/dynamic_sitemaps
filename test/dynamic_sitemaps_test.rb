@@ -12,6 +12,7 @@ class DynamicSitemapsTest < ActiveSupport::TestCase
     assert !DynamicSitemaps.always_generate_index
     assert_equal Rails.root.join("config", "sitemap.rb").to_s, DynamicSitemaps.config_path
     assert_equal 50000, DynamicSitemaps.per_page
+    assert_equal ["production"], DynamicSitemaps.ping_environments
   end
 
   test "raises error on blank paths" do
