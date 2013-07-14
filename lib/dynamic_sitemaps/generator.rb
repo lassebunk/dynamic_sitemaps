@@ -26,7 +26,7 @@ module DynamicSitemaps
       args.last[:folder] ||= folder
       sitemap = Sitemap.new(*args, &block)
 
-      ensure_unique_sitemap_name! sitemap
+      ensure_valid_sitemap_name! sitemap
       sitemap_names[sitemap.folder] << sitemap.name
 
       sitemaps << SitemapGenerator.new(sitemap).generate
@@ -41,8 +41,9 @@ module DynamicSitemaps
       sitemap(name, options, &block)
     end
 
-    def ensure_unique_sitemap_name!(sitemap)
+    def ensure_valid_sitemap_name!(sitemap)
       raise ArgumentError, "Sitemap name :#{sitemap.name} has already been defined for the folder \"#{sitemap.folder}\". Please use `sitemap :other_name do ... end` or `sitemap_for <relation>, name: :other_name`." if sitemap_names[sitemap.folder].include?(sitemap.name)
+      raise ArgumentError, "Sitemap name :#{sitemap.name} conflicts with the index file name #{DynamicSitemaps.index_file_name}. Please change it using `sitemap :other_name do ... end`." if "#{sitemap.name}.xml" == DynamicSitemaps.index_file_name
     end
 
     # Array of SitemapResult
