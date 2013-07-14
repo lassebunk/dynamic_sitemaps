@@ -294,6 +294,51 @@ class GeneratorTest < ActiveSupport::TestCase
     end
   end
 
+  test "generates to temporary folder first" do
+    raise_test_error = false
+
+    block = Proc.new do
+      host "www.example.com"
+
+      sitemap :site do
+        url root_url
+      end
+
+      raise RuntimeError if raise_test_error
+
+      sitemap :second do
+        url root_url
+      end
+    end
+
+    valid_files = ["second.xml", "site.xml", "sitemap.xml"]
+
+    DynamicSitemaps.generate_sitemap &block
+    assert_equal valid_files, Dir[Rails.root.join("public/sitemaps/*")].map { |p| File.basename(p) }
+
+    raise_test_error = true
+    assert_raises RuntimeError do
+      DynamicSitemaps.generate_sitemap &block
+    end
+    assert_equal valid_files, Dir[Rails.root.join("public/sitemaps/*")].map { |p| File.basename(p) }
+  end
+
+  test "removes temporary folder if failing" do
+    assert_raises RuntimeError do
+      DynamicSitemaps.generate_sitemap do
+        host "www.example.com"
+
+        sitemap :site do
+          url root_url
+        end
+
+        raise RuntimeError
+      end
+    end
+
+    assert !Dir.exists?(DynamicSitemaps.temp_path)
+  end
+
   test "large sitemap" do
     DynamicSitemaps.generate_sitemap do
       host "www.mydomain.com"

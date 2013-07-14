@@ -13,6 +13,7 @@ class DynamicSitemapsTest < ActiveSupport::TestCase
     assert_equal Rails.root.join("config", "sitemap.rb").to_s, DynamicSitemaps.config_path
     assert_equal 50000, DynamicSitemaps.per_page
     assert_equal ["production"], DynamicSitemaps.ping_environments
+    assert_equal Rails.root.join("tmp", "dynamic_sitemaps").to_s, DynamicSitemaps.temp_path
   end
 
   test "configuration block" do

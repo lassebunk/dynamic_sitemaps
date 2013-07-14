@@ -102,6 +102,10 @@ module DynamicSitemaps
       raise "sitemap_ping_urls has been removed. Please use `ping \"http://example.com/sitemap.xml\"` in config/sitemap.rb instead."
     end
 
+    def temp_path
+      @temp_path ||= Rails.root.join("tmp", "dynamic_sitemaps").to_s
+    end
+
     # Resets all instance variables. Used for testing.
     def reset!
       instance_variables.each { |var| remove_instance_variable var }
