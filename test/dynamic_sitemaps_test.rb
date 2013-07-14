@@ -15,6 +15,16 @@ class DynamicSitemapsTest < ActiveSupport::TestCase
     assert_equal ["production"], DynamicSitemaps.ping_environments
   end
 
+  test "configuration block" do
+    DynamicSitemaps.configure do |config|
+      config.folder = "mycustomfolder"
+      config.per_page = 1234
+    end
+
+    assert_equal "mycustomfolder", DynamicSitemaps.folder
+    assert_equal 1234, DynamicSitemaps.per_page
+  end
+
   test "raises error on blank paths" do
     assert_nothing_raised do
       DynamicSitemaps.path = "/my/test/folder"
