@@ -32,8 +32,27 @@ class GeneratorTest < ActiveSupport::TestCase
     assert !File.exists?(Rails.root.join("public", "sitemaps", "site.xml"))
   end
 
-  test "custom path" do
-    # TODO: Test custom DynamicSitemaps.path and folder
+  test "custom path and folder" do
+    path = File.dirname(__FILE__) + "/tmp/testpath"
+    folder = "myfolder"
+
+    FileUtils.rm_rf path
+    DynamicSitemaps.path = path
+    DynamicSitemaps.folder = folder
+
+    DynamicSitemaps.generate_sitemap do
+      host "www.mydomain.com"
+
+      sitemap :one do
+        url root_url
+      end
+      sitemap :two do
+        url root_url
+      end
+    end
+
+    assert_equal ["one.xml", "sitemap.xml", "two.xml"],
+                 Dir["#{path}/#{folder}/*"].map { |p| File.basename(p) }
   end
 
   test "index" do
