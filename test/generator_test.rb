@@ -33,6 +33,11 @@ class GeneratorTest < ActiveSupport::TestCase
   end
 
   test "custom path" do
+    # TODO: Test custom DynamicSitemaps.path and folder
+  end
+
+  test "custom index file name" do
+    # TODO: Test custom index file name
   end
 
   test "index" do
