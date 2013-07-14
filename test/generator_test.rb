@@ -52,7 +52,7 @@ class GeneratorTest < ActiveSupport::TestCase
     end
 
     assert_equal ["one.xml", "sitemap.xml", "two.xml"],
-                 Dir["#{path}/#{folder}/*"].map { |p| File.basename(p) }
+                 Dir["#{path}/#{folder}/*"].sort.map { |p| File.basename(p) }.sort
   end
 
   test "index" do
@@ -86,7 +86,7 @@ class GeneratorTest < ActiveSupport::TestCase
                   "products4.xml", "products5.xml", "products6.xml", "second.xml",
                   "second2.xml", "second3.xml", "second4.xml", "second5.xml", "second6.xml",
                   "second7.xml", "sitemap.xml"],
-                  Dir[Rails.root.join("public/sitemaps/*")].map { |p| File.basename(p) }
+                  Dir[Rails.root.join("public/sitemaps/*")].map { |p| File.basename(p) }.sort
 
     assert_equal ["http://www.test.com/sitemaps/first.xml", "http://www.test.com/sitemaps/second.xml",
                   "http://www.test.com/sitemaps/second2.xml", "http://www.test.com/sitemaps/second3.xml",
@@ -116,7 +116,7 @@ class GeneratorTest < ActiveSupport::TestCase
 
     ["one", "two"].each do |folder|
       assert_equal ["first.xml", "second.xml", "sitemap.xml"],
-                   Dir[Rails.root.join("public/sitemaps/#{folder}/*")].map { |p| File.basename(p) }
+                   Dir[Rails.root.join("public/sitemaps/#{folder}/*")].map { |p| File.basename(p) }.sort
 
       doc = open_sitemap(Rails.root.join("public/sitemaps/#{folder}/sitemap.xml"))
 
@@ -314,13 +314,13 @@ class GeneratorTest < ActiveSupport::TestCase
     valid_files = ["second.xml", "site.xml", "sitemap.xml"]
 
     DynamicSitemaps.generate_sitemap &block
-    assert_equal valid_files, Dir[Rails.root.join("public/sitemaps/*")].map { |p| File.basename(p) }
+    assert_equal valid_files, Dir[Rails.root.join("public/sitemaps/*")].map { |p| File.basename(p) }.sort
 
     raise_test_error = true
     assert_raises RuntimeError do
       DynamicSitemaps.generate_sitemap &block
     end
-    assert_equal valid_files, Dir[Rails.root.join("public/sitemaps/*")].map { |p| File.basename(p) }
+    assert_equal valid_files, Dir[Rails.root.join("public/sitemaps/*")].map { |p| File.basename(p) }.sort
   end
 
   test "removes temporary folder if failing" do
