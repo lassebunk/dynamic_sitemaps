@@ -36,10 +36,6 @@ class GeneratorTest < ActiveSupport::TestCase
     # TODO: Test custom DynamicSitemaps.path and folder
   end
 
-  test "custom index file name" do
-    # TODO: Test custom index file name
-  end
-
   test "index" do
     14.times { Product.create }
 
@@ -109,6 +105,23 @@ class GeneratorTest < ActiveSupport::TestCase
                     "http://www.#{folder}.com/sitemaps/#{folder}/second.xml"],
                     doc.xpath("sitemapindex/sitemap/loc").map(&:text)
     end
+  end
+
+  test "custom index file name" do
+    DynamicSitemaps.index_file_name = "custom.xml"
+    DynamicSitemaps.generate_sitemap do
+      host "www.mydomain.com"
+
+      sitemap :one do
+        url root_url
+      end
+      sitemap :two do
+        url root_url
+      end
+    end
+
+    doc = open_sitemap(Rails.root.join("public", "sitemaps", "custom.xml"))
+    assert_equal 2, doc.xpath("sitemapindex/sitemap/loc").count
   end
 
   test "ensure unique sitemap names" do
