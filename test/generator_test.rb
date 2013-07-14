@@ -181,6 +181,18 @@ class GeneratorTest < ActiveSupport::TestCase
     end
   end
 
+  test "sitemap name conflict with index file name" do
+    assert_raises ArgumentError do
+      DynamicSitemaps.generate_sitemap do
+        host "www.example.com"
+
+        sitemap :sitemap do
+          url root_url
+        end
+      end
+    end
+  end
+
   test "always generate index" do
     DynamicSitemaps.always_generate_index = true
     DynamicSitemaps.generate_sitemap
