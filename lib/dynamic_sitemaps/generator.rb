@@ -3,17 +3,40 @@ module DynamicSitemaps
     # Generates the sitemap(s) and index based on the configuration file specified in DynamicSitemaps.config_path.
     # If you supply a block, that block is evaluated instead of the configuration file.
     def generate(&block)
+      create_temp_dir
       if block
         instance_eval &block
       else
         instance_eval open(DynamicSitemaps.config_path).read, DynamicSitemaps.config_path
       end
       generate_index
+      move_to_destination
       ping_search_engines
+    ensure
+      remove_temp_dir
     end
 
     def generate_index
       IndexGenerator.new(sitemaps).generate
+    end
+
+    def create_temp_dir
+      remove_temp_dir
+      FileUtils.mkdir_p DynamicSitemaps.temp_path
+    end
+
+    def remove_temp_dir
+      FileUtils.rm_rf DynamicSitemaps.temp_path
+    end
+
+    def move_to_destination
+      sitemaps.map(&:folder).uniq.each do |folder|
+        destination = "#{DynamicSitemaps.path}/#{folder}"
+        FileUtils.mkdir_p destination
+        FileUtils.rm_rf Dir.glob("#{destination}/*")
+        FileUtils.mv Dir["#{DynamicSitemaps.temp_path}/#{folder}/*"], destination
+      end
+      remove_temp_dir
     end
 
     def ping_search_engines
@@ -79,8 +102,6 @@ module DynamicSitemaps
       if args.any?
         @folder = args.first
         raise ArgumentError, "Folder can't be blank." if @folder.blank?
-
-        FileUtils.rm_rf Dir.glob("#{DynamicSitemaps.path}/#{folder}/*")
       else
         # Ensure that the default folder is set and cleaned.
         folder DynamicSitemaps.folder if @folder.blank?

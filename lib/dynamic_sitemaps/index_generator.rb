@@ -9,10 +9,10 @@ module DynamicSitemaps
 
     def generate
       sitemaps.group_by(&:folder).each do |folder, sitemaps|
-        index_path = "#{DynamicSitemaps.path}/#{folder}/#{DynamicSitemaps.index_file_name}"
+        index_path = "#{DynamicSitemaps.temp_path}/#{folder}/#{DynamicSitemaps.index_file_name}"
 
         if !DynamicSitemaps.always_generate_index && sitemaps.count == 1 && sitemaps.first.files.count == 1
-          file_path = "#{DynamicSitemaps.path}/#{folder}/#{sitemaps.first.files.first}"
+          file_path = "#{DynamicSitemaps.temp_path}/#{folder}/#{sitemaps.first.files.first}"
           FileUtils.copy file_path, index_path
           File.delete file_path
         else

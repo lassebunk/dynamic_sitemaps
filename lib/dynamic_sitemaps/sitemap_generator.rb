@@ -96,7 +96,7 @@ module DynamicSitemaps
     end
 
     def folder_path
-      "#{DynamicSitemaps.path}/#{folder}"
+      "#{DynamicSitemaps.temp_path}/#{folder}"
     end
 
     def path

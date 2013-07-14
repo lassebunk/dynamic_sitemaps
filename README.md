@@ -58,7 +58,7 @@ Then, to generate the sitemap:
 
     $ rake sitemap:generate
 
-This will, by default, empty `<project root>/public/sitemaps/*` and generate a `sitemap.xml` that will look like this:
+This will, by default, generate a `sitemap.xml` file in `<project root>/public/sitemaps` that will look like this:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -160,6 +160,11 @@ DynamicSitemaps.configure do |config|
   config.ping_environments << "staging"
 end
 ```
+
+## In case of failure
+
+DynamicSitemaps generates to a temporary directory (`<rails root>/tmp/dynamic_sitemaps`) first and, when finished, moves the files into the destination (by default `public/sitemaps`).
+So in case you have generated a sitemap succesfully and the next sitemap generation fails, your sitemap files will remain untouched and available.
 
 ## Production example with multiple domains, Capistrano, and Whenever
 
