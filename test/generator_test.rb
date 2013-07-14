@@ -321,6 +321,8 @@ class GeneratorTest < ActiveSupport::TestCase
       DynamicSitemaps.generate_sitemap &block
     end
     assert_equal valid_files, Dir[Rails.root.join("public/sitemaps/*")].map { |p| File.basename(p) }.sort
+
+    assert !Dir.exists?(DynamicSitemaps.temp_path)
   end
 
   test "removes temporary folder if failing" do
