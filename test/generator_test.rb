@@ -32,8 +32,78 @@ class GeneratorTest < ActiveSupport::TestCase
     assert !File.exists?(Rails.root.join("public", "sitemaps", "site.xml"))
   end
 
+  test "custom path" do
+  end
+
   test "index" do
-    # TODO: Test index generation
+    14.times { Product.create }
+
+    DynamicSitemaps.per_page = 5
+    DynamicSitemaps.generate_sitemap do
+      host "www.test.com"
+
+      sitemap :first do
+        url root_url
+      end
+
+      sitemap :second do
+        1.upto(32) do |num|
+          url "http://#{host}/test#{num}"
+        end
+      end
+
+      sitemap_for Product.scoped do |product|
+        url product
+        url product_comments_url(product)
+      end
+    end
+
+    doc = open_sitemap(remove_namespaces: false)
+    assert_equal ({ "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9" }), doc.namespaces
+    doc.remove_namespaces!
+
+    assert_equal ["first.xml", "products.xml", "products2.xml", "products3.xml",
+                  "products4.xml", "products5.xml", "products6.xml", "second.xml",
+                  "second2.xml", "second3.xml", "second4.xml", "second5.xml", "second6.xml",
+                  "second7.xml", "sitemap.xml"],
+                  Dir[Rails.root.join("public/sitemaps/*")].map { |p| File.basename(p) }
+
+    assert_equal ["http://www.test.com/sitemaps/first.xml", "http://www.test.com/sitemaps/second.xml",
+                  "http://www.test.com/sitemaps/second2.xml", "http://www.test.com/sitemaps/second3.xml",
+                  "http://www.test.com/sitemaps/second4.xml", "http://www.test.com/sitemaps/second5.xml",
+                  "http://www.test.com/sitemaps/second6.xml", "http://www.test.com/sitemaps/second7.xml",
+                  "http://www.test.com/sitemaps/products.xml", "http://www.test.com/sitemaps/products2.xml",
+                  "http://www.test.com/sitemaps/products3.xml", "http://www.test.com/sitemaps/products4.xml",
+                  "http://www.test.com/sitemaps/products5.xml", "http://www.test.com/sitemaps/products6.xml"],
+                  doc.xpath("sitemapindex/sitemap/loc").map(&:text)
+  end
+
+  test "indexes in multiple folders" do
+    DynamicSitemaps.generate_sitemap do
+      ["one", "two"].each do |domain|
+        host "www.#{domain}.com"
+        folder "sitemaps/#{domain}"
+
+        sitemap :first do
+          url root_url
+        end
+
+        sitemap :second do
+          url "http://#{host}/test"
+        end
+      end
+    end
+
+    ["one", "two"].each do |folder|
+      assert_equal ["first.xml", "second.xml", "sitemap.xml"],
+                   Dir[Rails.root.join("public/sitemaps/#{folder}/*")].map { |p| File.basename(p) }
+
+      doc = open_sitemap(Rails.root.join("public/sitemaps/#{folder}/sitemap.xml"))
+
+      assert_equal ["http://www.#{folder}.com/sitemaps/#{folder}/first.xml",
+                    "http://www.#{folder}.com/sitemaps/#{folder}/second.xml"],
+                    doc.xpath("sitemapindex/sitemap/loc").map(&:text)
+    end
   end
 
   test "ensure unique sitemap names" do
