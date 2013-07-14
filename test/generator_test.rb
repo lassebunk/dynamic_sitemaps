@@ -36,6 +36,44 @@ class GeneratorTest < ActiveSupport::TestCase
     # TODO: Test index generation
   end
 
+  test "ensure unique sitemap names" do
+    assert_raises ArgumentError do
+      DynamicSitemaps.generate_sitemap do
+        host "www.example.com"
+        sitemap :site do
+          url root_url
+        end
+        sitemap :site do
+          url root_url
+        end
+      end
+    end
+  end
+
+  test "ensure unique sitemap names for relations" do
+    assert_raises ArgumentError do
+      DynamicSitemaps.generate_sitemap do
+        host "www.example.com"
+        sitemap_for Product.scoped
+        sitemap_for Product.where(id: 1)
+      end
+    end
+  end
+
+  test "unique sitemap names are checked in scope of folder" do
+    assert_nothing_raised do
+      DynamicSitemaps.generate_sitemap do
+        host "www.example.com"
+
+        folder "sitemaps/one"
+        sitemap_for Product.scoped
+
+        folder "sitemaps/two"
+        sitemap_for Product.scoped
+      end
+    end
+  end
+
   test "always generate index" do
     DynamicSitemaps.always_generate_index = true
     DynamicSitemaps.generate_sitemap
@@ -167,6 +205,7 @@ class GeneratorTest < ActiveSupport::TestCase
     DynamicSitemaps.generate_sitemap do
       ["www.test.com", "www.example.com"].each do |domain|
         host domain
+        folder "sitemaps/#{domain}"
         sitemap :site do
           url root_url
         end

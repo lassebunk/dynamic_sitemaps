@@ -6,7 +6,7 @@ module DynamicSitemaps
       if block
         instance_eval &block
       else
-        instance_eval open(DynamicSitemaps.config_path).read
+        instance_eval open(DynamicSitemaps.config_path).read, DynamicSitemaps.config_path
       end
       generate_index
       ping_search_engines
@@ -25,6 +25,10 @@ module DynamicSitemaps
       args.last[:host] ||= host
       args.last[:folder] ||= folder
       sitemap = Sitemap.new(*args, &block)
+
+      ensure_unique_sitemap_name! sitemap
+      sitemap_names[sitemap.folder] << sitemap.name
+
       sitemaps << SitemapGenerator.new(sitemap).generate
     end
 
@@ -37,9 +41,18 @@ module DynamicSitemaps
       sitemap(name, options, &block)
     end
 
+    def ensure_unique_sitemap_name!(sitemap)
+      raise ArgumentError, "Sitemap name :#{sitemap.name} has already been defined for the folder \"#{sitemap.folder}\". Please use `sitemap :other_name do ... end` or `sitemap_for <relation>, name: :other_name`." if sitemap_names[sitemap.folder].include?(sitemap.name)
+    end
+
     # Array of SitemapResult
     def sitemaps
       @sitemaps ||= []
+    end
+
+    # Generated sitemap names
+    def sitemap_names
+      @sitemap_names ||= Hash.new { |h, k| h[k] = [] }
     end
 
     # URLs to ping after generation
