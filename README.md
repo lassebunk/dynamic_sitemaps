@@ -20,7 +20,7 @@ DynamicSitemaps is tested in Rails 3.2.13 using Ruby 1.9.3 and 2.0.0, but should
 
 Add this line to your application's Gemfile:
 
-    gem "dynamic_sitemaps", "2.0.0.beta2"
+    gem "dynamic_sitemaps"
 
 And then execute:
 
