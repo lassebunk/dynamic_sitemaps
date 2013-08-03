@@ -14,7 +14,7 @@ Version 2.0 is not compatible with version 1.0 (although the configuration DSL l
 
 ## Requirements
 
-DynamicSitemaps is tested in Rails 3.2.13 using Ruby 1.9.3 and 2.0.0, but should work in other versions of Rails 3 and above and Ruby 1.9 and above. Please create an [issue](https://github.com/lassebunk/dynamic_sitemaps/issues) if you encounter any problems.
+DynamicSitemaps is tested in Rails 3.2.13 (and works in Rails 4.0.0, too) using Ruby 1.9.3 and 2.0.0, but should work in other versions of Rails 3 and above and Ruby 1.9 and above. Please create an [issue](https://github.com/lassebunk/dynamic_sitemaps/issues) if you encounter any problems.
 
 ## Installation
 
