@@ -341,6 +341,30 @@ class GeneratorTest < ActiveSupport::TestCase
     assert !Dir.exists?(DynamicSitemaps.temp_path)
   end
 
+  test "subfolders" do
+    DynamicSitemaps.per_page = 5
+    DynamicSitemaps.generate_sitemap do
+      host "www.example.com"
+       
+      sitemap :site do
+        url root_url, :last_mod => Time.now, change_freq: "weekly", priority: 1.0
+      end
+      
+      folder "sitemaps/subfolder"
+      sitemap :articles do
+        14.times do |i|
+          url "http://#{host}/articles/#{i}"
+        end
+      end
+    end
+    assert_equal ["sitemaps/sitemap.xml",
+                  "sitemaps/subfolder/articles.xml",
+                  "sitemaps/subfolder/articles2.xml",
+                  "sitemaps/subfolder/articles3.xml",
+                  "sitemaps/subfolder/sitemap.xml"],
+                  Dir[Rails.root.join("public/sitemaps/**/*.xml")].map { |p| Pathname.new(p).relative_path_from(Pathname.new(DynamicSitemaps.path)).to_s }.sort
+  end
+
   test "large sitemap" do
     DynamicSitemaps.generate_sitemap do
       host "www.mydomain.com"
