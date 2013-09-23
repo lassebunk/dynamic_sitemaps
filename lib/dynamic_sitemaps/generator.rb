@@ -35,8 +35,11 @@ module DynamicSitemaps
         FileUtils.mkdir_p destination
         FileUtils.rm_rf Dir.glob(File.join(destination, "*"))
 
-        temp_files = File.join(DynamicSitemaps.temp_path, folder, "*.xml")
+        current_directory = Dir.pwd
+        Dir.chdir(DynamicSitemaps.temp_path)
+        temp_files = Dir.glob("**/*.xml")
         FileUtils.mv Dir.glob(temp_files), destination
+        Dir.chdir(current_directory)
       end
       remove_temp_dir
     end
