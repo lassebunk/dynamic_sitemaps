@@ -6,6 +6,8 @@ require "dynamic_sitemaps/index_generator"
 require "dynamic_sitemaps/sitemap_result"
 require "dynamic_sitemaps/pinger"
 require "dynamic_sitemaps/logger"
+require "dynamic_sitemaps/storage"
+require "dynamic_sitemaps/storage/local_storage"
 
 module DynamicSitemaps
   DEFAULT_PER_PAGE = 50000
@@ -83,6 +85,14 @@ module DynamicSitemaps
     def config_path=(new_path)
       raise ArgumentError, "DynamicSitemaps.config_path can't be blank." if new_path.blank?
       @config_path = new_path.to_s
+    end
+
+    def storage=(storage_class)
+      @storage_class = storage_class
+    end
+
+    def storage
+      @storage_class ||= DynamicSitemaps::LocalStorage
     end
 
     def per_page
