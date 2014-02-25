@@ -22,6 +22,7 @@ module DynamicSitemaps
 
   class << self
     attr_writer :index_file_name, :always_generate_index, :per_page, :search_engine_ping_urls, :ping_environments
+    attr_accessor :bucket_name, :aws_access_key, :aws_secret_access_key
 
     # Generates the sitemap(s) and index based on the configuration file specified in DynamicSitemaps.config_path.
     # If you supply a block, that block is evaluated instead of the configuration file.
