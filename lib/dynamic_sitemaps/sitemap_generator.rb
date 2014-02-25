@@ -36,15 +36,15 @@ module DynamicSitemaps
 
     def write_url(url, options = {})
       write '<url>'
-      write '<loc>' + format_url(url) + '</loc>'
+      write "<loc>#{format_url(url)}</loc>"
       if last_mod = options[:last_mod]
-        write '<lastmod>' + format_date(last_mod) + '</lastmod>'
+        write "<lastmod>#{format_date(last_mod)}</lastmod>"
       end
       if change_freq = options[:change_freq]
-        write '<changefreq>' + change_freq + '</changefreq>'
+        write "<changefreq>#{change_freq}</changefreq>"
       end
       if priority = options[:priority]
-        write '<priority>' + priority.to_s + '</priority>'
+        write "<priority>#{priority}</priority>"
       end
       write '</url>'
     end
