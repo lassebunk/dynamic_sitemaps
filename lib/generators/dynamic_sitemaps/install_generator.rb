@@ -11,7 +11,7 @@ module DynamicSitemaps
     def create_config
       migration_template('create_sitemaps.rb', 'db/migrate/create_sitemaps.rb') if storage == :database
 
-      copy_file "#{storage}_initializer.rb", 'config/dynamic_sitemaps.rb'
+      copy_file "#{storage}_initializer.rb", 'config/initializers/dynamic_sitemaps.rb'
       copy_file 'config.rb', 'config/sitemap.rb'
     end
 
