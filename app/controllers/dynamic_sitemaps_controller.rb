@@ -1,6 +1,6 @@
 class DynamicSitemapsController < ApplicationController
   def sitemap
-    sitemap = Sitemap.where(path: request.path).first
+    sitemap = ::Sitemap.where(path: request.path).first
 
     if sitemap
       render text: sitemap.content
