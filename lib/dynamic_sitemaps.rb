@@ -114,6 +114,8 @@ module DynamicSitemaps
     # Resets all instance variables. Used for testing.
     def reset!
       instance_variables.each { |var| remove_instance_variable var }
+    # reset the protocol to http
+      Rails.application.routes.default_url_options[:protocol] = "http"
     end
   end
 end

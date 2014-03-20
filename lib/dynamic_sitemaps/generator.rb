@@ -99,9 +99,9 @@ module DynamicSitemaps
     def protocol(*args)
       if args.any?
         @protocol = args.first
-        #Rails.application.routes.default_url_options[:protocol] = @protocol
+        Rails.application.routes.default_url_options[:protocol] = @protocol
       else
-        DynamicSitemaps.protocol
+        @protocol
       end
     end
 

@@ -55,6 +55,51 @@ class GeneratorTest < ActiveSupport::TestCase
                  Dir["#{path}/#{folder}/*"].sort.map { |p| File.basename(p) }.sort
   end
 
+  test "https protocol" do
+    2.times { Product.create }
+
+    DynamicSitemaps.generate_sitemap do
+      protocol "https"
+      host "www.mytest.com"
+
+      sitemap :site do
+        url root_url
+      end
+
+      sitemap_for Product.scoped do |product|
+        url product
+        url product_comments_url(product)
+      end
+
+    end
+
+    doc = open_sitemap
+    assert_equal "https://www.mytest.com/sitemaps/site.xml", doc.xpath("sitemapindex/sitemap/loc").first.text
+
+    doc = open_sitemap(Rails.root.join("public", "sitemaps", "products.xml"))
+    urls = doc.xpath("urlset/url")
+    assert_equal 4, urls.count
+
+
+    urls[0].tap do |url|
+      assert_equal "https://www.mytest.com/products/1", url.xpath("loc").text
+    end
+
+    urls[1].tap do |url|
+      assert_equal "https://www.mytest.com/products/1/comments", url.xpath("loc").text
+    end
+
+    urls[2].tap do |url|
+      assert_equal "https://www.mytest.com/products/2", url.xpath("loc").text
+    end
+
+    urls[3].tap do |url|
+      assert_equal "https://www.mytest.com/products/2/comments", url.xpath("loc").text
+    end
+
+
+  end
+
   test "index" do
     14.times { Product.create }
 
