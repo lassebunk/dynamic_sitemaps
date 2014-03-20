@@ -12,6 +12,7 @@ module DynamicSitemaps
   DEFAULT_FOLDER = "sitemaps"
   DEFAULT_INDEX_FILE_NAME = "sitemap.xml"
   DEFAULT_ALWAYS_GENERATE_INDEX = false
+  DEFAULT_PROTOCOL = "http"
   SEARCH_ENGINE_PING_URLS = [
     "http://www.google.com/webmasters/sitemaps/ping?sitemap=%s",
     "http://www.bing.com/webmaster/ping.aspx?siteMap=%s"
@@ -104,6 +105,10 @@ module DynamicSitemaps
 
     def temp_path
       @temp_path ||= Rails.root.join("tmp", "dynamic_sitemaps").to_s
+    end
+
+    def protocol
+      @protocol ||= DEFAULT_PROTOCOL
     end
 
     # Resets all instance variables. Used for testing.

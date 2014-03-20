@@ -48,6 +48,7 @@ module DynamicSitemaps
     def sitemap(*args, &block)
       args << {} unless args.last.is_a?(Hash)
       args.last[:host] ||= host
+      args.last[:protocol] ||= protocol
       args.last[:folder] ||= folder
       sitemap = Sitemap.new(*args, &block)
 
@@ -92,6 +93,15 @@ module DynamicSitemaps
         Rails.application.routes.default_url_options[:host] = @host
       else
         @host
+      end
+    end
+
+    def protocol(*args)
+      if args.any?
+        @protocol = args.first
+        #Rails.application.routes.default_url_options[:protocol] = @protocol
+      else
+        DynamicSitemaps.protocol
       end
     end
 
