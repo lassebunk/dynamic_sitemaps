@@ -1,6 +1,7 @@
 # Change this to your host. See the readme at https://github.com/lassebunk/dynamic_sitemaps
 # for examples of multiple hosts and folders.
 host "www.example.com"
+protocol "http"
 
 sitemap :site do
   url root_url, last_mod: Time.now, change_freq: "daily", priority: 1.0
@@ -37,4 +38,4 @@ end
 
 # Ping search engines after sitemap generation:
 #
-#   ping_with "http://#{host}/sitemap.xml"
+#   ping_with "#{protocol}://#{host}/sitemap.xml"

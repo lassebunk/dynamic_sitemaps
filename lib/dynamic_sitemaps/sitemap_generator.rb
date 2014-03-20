@@ -107,6 +107,10 @@ module DynamicSitemaps
       sitemap.host
     end
 
+    def protocol
+      sitemap.protocol
+    end
+
     def ensure_host!
       raise "No host specified. Please specify a host using `host \"www.mydomain.com\"` at the top of your sitemap configuration file." if sitemap.host.blank?
     end

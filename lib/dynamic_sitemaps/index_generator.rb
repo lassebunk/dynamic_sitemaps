@@ -34,7 +34,7 @@ module DynamicSitemaps
       sitemaps.each do |sitemap|
         sitemap.files.each do |file_name|
           file.puts '<sitemap>',
-                    "<loc>http://#{sitemap.host}/#{sitemap.folder}/#{file_name}</loc>",
+                    "<loc>#{sitemap.protocol}://#{sitemap.host}/#{sitemap.folder}/#{file_name}</loc>",
                     '</sitemap>'
         end
       end
