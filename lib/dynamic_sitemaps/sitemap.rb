@@ -1,6 +1,6 @@
 module DynamicSitemaps
   class Sitemap
-    attr_reader :name, :collection, :block, :host, :folder
+    attr_reader :name, :collection, :block, :host, :folder, :protocol
 
     # Initializes a sitemap object.
     # 
@@ -15,6 +15,7 @@ module DynamicSitemaps
       if args.last.is_a?(Hash)
         options = args.pop
         @per_page = options[:per_page]
+        @protocol = options[:protocol]
         @host = options[:host]
         @folder = options[:folder]
         @collection = options[:collection]
@@ -24,11 +25,15 @@ module DynamicSitemaps
     end
 
     def root_url
-      "http://#{host}"
+      "#{protocol}://#{host}"
     end
 
     def per_page
       @per_page ||= DynamicSitemaps.per_page
+    end
+
+    def protocol
+      @protocol ||= DynamicSitemaps.protocol
     end
 
     # Generates sitemap XML files based on this sitemap
