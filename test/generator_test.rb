@@ -456,6 +456,37 @@ class GeneratorTest < ActiveSupport::TestCase
     end
   end
 
+  test "basic sitemap with model in namespace" do
+    2.times { Blog::Post.create }
+
+    DynamicSitemaps.generate_sitemap do
+      host "www.mytest.com"
+
+      sitemap :site do
+        url root_url
+      end
+
+      sitemap_for Blog::Post.scoped do |product|
+        url product
+        url product_comments_url(product)
+      end
+
+    end
+
+    doc = open_sitemap
+    assert_equal "http://www.mytest.com/sitemaps/site.xml", doc.xpath("sitemapindex/sitemap/loc").first.text
+
+    doc = open_sitemap(Rails.root.join("public", "sitemaps", "posts.xml"))
+    urls = doc.xpath("urlset/url")
+    assert_equal 4, urls.count
+
+
+    urls[0].tap do |url|
+      assert_equal "http://www.mytest.com/blog_posts/1", url.xpath("loc").text
+    end
+
+  end
+
 private
 
   # Opens a sitemap file using Nokogiri::XML and removes namespaces by default.
