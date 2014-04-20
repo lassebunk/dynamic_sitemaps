@@ -4,4 +4,6 @@ Dummy::Application.routes.draw do
   resources :products do
     resources :comments
   end
+
+  resources :blog_posts
 end
