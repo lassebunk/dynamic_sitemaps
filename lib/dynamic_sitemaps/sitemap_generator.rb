@@ -118,7 +118,7 @@ module DynamicSitemaps
     def file
       @file ||= begin
         files << file_name
-        FileUtils.mkdir_p folder_path
+        FileUtils.mkdir_p File.dirname(path)
         File.open(path, "w")
       end
     end
