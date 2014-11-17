@@ -143,8 +143,8 @@ module DynamicSitemaps
     end
 
     def format_url(url)
-      case url
-      when ActiveRecord::Base
+      is_active_record = defined?(ActiveRecord::Base) && url.is_a?(ActiveRecord::Base)
+      if is_active_record
         polymorphic_url(url)
       else
         url
