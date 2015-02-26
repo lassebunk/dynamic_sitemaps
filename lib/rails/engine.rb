@@ -3,7 +3,7 @@ module DynamicSitemaps
     engine_name :dynamic_sitemaps
 
     rake_tasks do
-      load "dynamic_sitemaps/tasks/sitemap.rake"
+      load "dynamic_sitemaps/tasks/dynamic_sitemaps.rake"
     end
   end
 end
