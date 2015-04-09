@@ -66,7 +66,7 @@ class GeneratorTest < ActiveSupport::TestCase
         url root_url
       end
 
-      sitemap_for Product.scoped do |product|
+      sitemap_for Product.where(nil) do |product|
         url product
         url product_comments_url(product)
       end
@@ -117,7 +117,7 @@ class GeneratorTest < ActiveSupport::TestCase
         end
       end
 
-      sitemap_for Product.scoped do |product|
+      sitemap_for Product.where(nil) do |product|
         url product
         url product_comments_url(product)
       end
@@ -206,7 +206,7 @@ class GeneratorTest < ActiveSupport::TestCase
     assert_raises ArgumentError do
       DynamicSitemaps.generate_sitemap do
         host "www.example.com"
-        sitemap_for Product.scoped
+        sitemap_for Product.where(nil)
         sitemap_for Product.where(id: 1)
       end
     end
@@ -218,10 +218,10 @@ class GeneratorTest < ActiveSupport::TestCase
         host "www.example.com"
 
         folder "sitemaps/one"
-        sitemap_for Product.scoped
+        sitemap_for Product.where(nil)
 
         folder "sitemaps/two"
-        sitemap_for Product.scoped
+        sitemap_for Product.where(nil)
       end
     end
   end
@@ -272,7 +272,7 @@ class GeneratorTest < ActiveSupport::TestCase
 
     DynamicSitemaps.generate_sitemap do
       host "www.mytest.com"
-      sitemap_for Product.scoped
+      sitemap_for Product.where(nil)
     end
 
     doc = open_sitemap
@@ -300,7 +300,7 @@ class GeneratorTest < ActiveSupport::TestCase
 
     DynamicSitemaps.generate_sitemap do
       host "www.mytest.com"
-      sitemap_for Product.scoped do |product|
+      sitemap_for Product.where(nil) do |product|
         url product, last_mod: 1234.seconds.ago, priority: (product.featured? ? 1.0 : nil), change_freq: "weekly"
         url product_comments_url(product)
       end
