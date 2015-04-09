@@ -98,7 +98,7 @@ end
 # Automatically link to all pages using the routes specified
 # using "resources :pages" in config/routes.rb. This will also
 # automatically set <lastmod> to the date and time in page.updated_at.
-sitemap_for Page.scoped
+sitemap_for Page.where(nil)
 
 # For products with special sitemap name and priority, and link to comments
 sitemap_for Product.published, name: :published_products do |product|
@@ -111,7 +111,7 @@ This generates the sitemap files `site.xml`, `pages.xml`, and `published_product
 
 The argument passed to `sitemap_for` needs to respond to [`#find_each`](http://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_each), like an ActiveRecord [Relation](http://api.rubyonrails.org/classes/ActiveRecord/Relation.html).
 This is to ensure that the records from the database are lazy loaded 1,000 at a time, so that it doesn't accidentally load millions of records in one call when the configuration file is read.
-Therefore we use `Page.scoped` instead of the normal `Page.all`.
+Therefore we use `Page.where(nil)` instead of the normal `Page.all`.
 
 ## Custom configuration
 
@@ -187,7 +187,7 @@ Site.all.each do |site|
 
   sitemap_for site.pages.where("slug != 'home'")
   sitemap_for site.blog_posts.published
-  sitemap_for site.tags.scoped
+  sitemap_for site.tags.where(nil)
 
   sitemap_for site.products.where("type_id != ?", ProductType.find_by_key("unknown").id) do |product|
     url product, last_mod: product.updated_at, priority: (product.featured? ? 1.0 : 0.7)

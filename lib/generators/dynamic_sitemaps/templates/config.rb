@@ -13,7 +13,7 @@ end
 # using "resources :pages" in config/routes.rb. This will also
 # automatically set <lastmod> to the date and time in page.updated_at:
 #
-#   sitemap_for Page.scoped
+#   sitemap_for Page.where(nil)
 
 # For products with special sitemap name and priority, and link to comments:
 #
@@ -33,7 +33,7 @@ end
 #       url root_url
 #     end
 # 
-#     sitemap_for site.products.scoped
+#     sitemap_for site.products.where(nil)
 #   end
 
 # Ping search engines after sitemap generation:
