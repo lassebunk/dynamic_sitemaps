@@ -205,7 +205,7 @@ In `config/routes.rb`:
 
 ```ruby
 get "sitemap.xml" => "home#sitemap", format: :xml, as: :sitemap
-get "robots.txt" => "home#robots", format: :text, as: :robots
+get "robots.:format" => "home#robots", format: :text, as: :robots
 ```
 
 #### Controller
