@@ -25,8 +25,16 @@ module DynamicSitemaps
 
       def ping(url)
         Logger.info "Pinging #{url} ..."
+        uri = URI.parse(url)
         begin
-          Net::HTTP.get(URI.parse(url))
+          Net::HTTP.new(
+            uri.host,
+            uri.port,
+            DynamicSitemaps.proxy_host,
+            DynamicSitemaps.proxy_port
+          ).start do |http|
+            http.get(uri.request_uri)
+          end
         rescue Exception => e
           Logger.warn "Failed to ping #{url} : #{e}"
         end

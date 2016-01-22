@@ -1,6 +1,6 @@
 module DynamicSitemaps
   class Sitemap
-    attr_reader :name, :collection, :block, :host, :folder, :protocol
+    attr_reader :name, :collection, :block, :host, :folder, :protocol, :proxy_host, :proxy_port
 
     # Initializes a sitemap object.
     # 
@@ -19,6 +19,8 @@ module DynamicSitemaps
         @host = options[:host]
         @folder = options[:folder]
         @collection = options[:collection]
+        @proxy_host = options[:proxy_host]
+        @proxy_port = options[:proxy_port]
       end
 
       @block = block

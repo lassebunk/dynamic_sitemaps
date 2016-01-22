@@ -13,6 +13,8 @@ module DynamicSitemaps
   DEFAULT_INDEX_FILE_NAME = "sitemap.xml"
   DEFAULT_ALWAYS_GENERATE_INDEX = false
   DEFAULT_PROTOCOL = "http"
+  DEFAULT_PROXY_HOST = nil
+  DEFAULT_PROXY_PORT = nil
   SEARCH_ENGINE_PING_URLS = [
     "http://www.google.com/webmasters/sitemaps/ping?sitemap=%s",
     "http://www.bing.com/webmaster/ping.aspx?siteMap=%s"
@@ -20,7 +22,7 @@ module DynamicSitemaps
   DEFAULT_PING_ENVIRONMENTS = ["production"]
 
   class << self
-    attr_writer :index_file_name, :always_generate_index, :per_page, :search_engine_ping_urls, :ping_environments
+    attr_writer :index_file_name, :always_generate_index, :per_page, :search_engine_ping_urls, :ping_environments, :proxy_host, :proxy_port
 
     # Generates the sitemap(s) and index based on the configuration file specified in DynamicSitemaps.config_path.
     # If you supply a block, that block is evaluated instead of the configuration file.
@@ -109,6 +111,14 @@ module DynamicSitemaps
 
     def protocol
       @protocol ||= DEFAULT_PROTOCOL
+    end
+
+    def proxy_host
+      @proxy_host ||= DEFAULT_PROXY_HOST
+    end
+
+    def proxy_port
+      @proxy_port ||= DEFAULT_PROXY_PORT
     end
 
     # Resets all instance variables. Used for testing.
