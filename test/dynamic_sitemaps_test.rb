@@ -14,16 +14,22 @@ class DynamicSitemapsTest < ActiveSupport::TestCase
     assert_equal 50000, DynamicSitemaps.per_page
     assert_equal ["production"], DynamicSitemaps.ping_environments
     assert_equal Rails.root.join("tmp", "dynamic_sitemaps").to_s, DynamicSitemaps.temp_path
+    assert_nil DynamicSitemaps.proxy_host
+    assert_nil DynamicSitemaps.proxy_port
   end
 
   test "configuration block" do
     DynamicSitemaps.configure do |config|
       config.folder = "mycustomfolder"
       config.per_page = 1234
+      config.proxy_host = "proxy"
+      config.proxy_port = 3128
     end
 
     assert_equal "mycustomfolder", DynamicSitemaps.folder
     assert_equal 1234, DynamicSitemaps.per_page
+    assert_equal "proxy", DynamicSitemaps.proxy_host
+    assert_equal 3128, DynamicSitemaps.proxy_port
   end
 
   test "raises error on blank paths" do
