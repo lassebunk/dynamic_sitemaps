@@ -65,7 +65,7 @@ class PingerTest < ActiveSupport::TestCase
     assert !DynamicSitemaps::Pinger.ping_for_environment?("development")
     assert !DynamicSitemaps::Pinger.ping_for_environment?("test")
     assert !DynamicSitemaps::Pinger.ping_for_environment?("staging")
-    
+
     DynamicSitemaps.ping_environments << "staging"
     assert DynamicSitemaps::Pinger.ping_for_environment?("staging")
     assert DynamicSitemaps::Pinger.ping_for_environment?("production")
