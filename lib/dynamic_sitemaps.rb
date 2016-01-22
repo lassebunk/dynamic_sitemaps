@@ -13,6 +13,8 @@ module DynamicSitemaps
   DEFAULT_INDEX_FILE_NAME = "sitemap.xml"
   DEFAULT_ALWAYS_GENERATE_INDEX = false
   DEFAULT_PROTOCOL = "http"
+  DEFAULT_PROXY_HOST = nil
+  DEFAULT_PROXY_PORT = nil
   SEARCH_ENGINE_PING_URLS = [
     "http://www.google.com/webmasters/sitemaps/ping?sitemap=%s",
     "http://www.bing.com/webmaster/ping.aspx?siteMap=%s"
@@ -38,6 +40,8 @@ module DynamicSitemaps
     #     config.always_generate_index = false
     #     config.config_path = Rails.root.join("config", "sitemap.rb")
     #     config.per_page = 50_000
+    #     config.proxy_host = "proxy1"
+    #     config.proxy_port = 3128
     #   end
     # 
     # To ping search engines after generating the sitemap:
@@ -109,6 +113,14 @@ module DynamicSitemaps
 
     def protocol
       @protocol ||= DEFAULT_PROTOCOL
+    end
+
+    def proxy_host
+      @proxy_host ||= DEFAULT_PROXY_HOST
+    end
+
+    def proxy_port
+      @proxy_port ||= DEFAULT_PROXY_PORT
     end
 
     # Resets all instance variables. Used for testing.
