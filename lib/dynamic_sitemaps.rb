@@ -111,6 +111,11 @@ module DynamicSitemaps
       @protocol ||= DEFAULT_PROTOCOL
     end
 
+    def protocol=(new_protocol)
+      raise ArgumentError, "DynamicSitemaps.protocol can't be blank." if new_protocol.blank?
+      @protocol = new_protocol.to_s
+    end
+
     # Resets all instance variables. Used for testing.
     def reset!
       instance_variables.each { |var| remove_instance_variable var }
