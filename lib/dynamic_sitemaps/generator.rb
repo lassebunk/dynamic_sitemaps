@@ -29,10 +29,17 @@ module DynamicSitemaps
       FileUtils.rm_rf DynamicSitemaps.temp_path
     end
 
+    def create_base_dir(folder)
+      destination = File.join(DynamicSitemaps.path, folder)
+      FileUtils.mkdir_p destination
+      destination
+    end
+
     def move_to_destination
-      sitemaps.map(&:folder).uniq.each do |folder|
-        destination = File.join(DynamicSitemaps.path, folder)
-        FileUtils.mkdir_p destination
+      sitemaps_folder = sitemaps.map(&:folder).uniq - [DynamicSitemaps.folder]
+      create_base_dir(DynamicSitemaps.folder)
+      sitemaps_folder.each do |folder|
+        destination = create_base_dir(folder)
         FileUtils.rm_rf Dir.glob(File.join(destination, "*"))
 
         temp_files = File.join(DynamicSitemaps.temp_path, folder, "*.xml")
