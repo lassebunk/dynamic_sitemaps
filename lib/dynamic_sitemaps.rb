@@ -34,6 +34,7 @@ module DynamicSitemaps
     #   DynamicSitemaps.configure do |config|
     #     config.path = Rails.root.join("public")
     #     config.folder = "sitemaps"
+    #     config.protocol = "https"
     #     config.index_file_name = "sitemap.xml"
     #     config.always_generate_index = false
     #     config.config_path = Rails.root.join("config", "sitemap.rb")
@@ -109,6 +110,12 @@ module DynamicSitemaps
 
     def protocol
       @protocol ||= DEFAULT_PROTOCOL
+    end
+
+    def protocol=(new_protocol)
+      raise ArgumentError, "DynamicSitemaps.protocol can't be blank." if new_protocol.blank?
+      Rails.application.routes.default_url_options[:protocol] = new_protocol.to_s
+      @protocol = new_protocol.to_s
     end
 
     # Resets all instance variables. Used for testing.

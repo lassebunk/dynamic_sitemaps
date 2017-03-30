@@ -123,6 +123,7 @@ In an initializer, e.g. `config/initializers/dynamic_sitemaps.rb`:
 # These are the built-in defaults, so you don't need to specify them.
 DynamicSitemaps.configure do |config|
   config.path = Rails.root.join("public")
+  config.protocol = "https"
   config.folder = "sitemaps" # This folder is emptied on each sitemap generation
   config.index_file_name = "sitemap.xml"
   config.always_generate_index = false # Makes sitemap.xml contain the sitemap
