@@ -1,10 +1,11 @@
 # Change this to your host. See the readme at https://github.com/lassebunk/dynamic_sitemaps
 # for examples of multiple hosts and folders.
-host "www.example.com"
+
+host 'www.example.com'
 protocol "http"
 
 sitemap :site do
-  url root_url, last_mod: Time.now, change_freq: "daily", priority: 1.0
+  url root_url, last_mod: Time.now, change_freq: :daily, priority: 1.0
 end
 
 # You can have multiple sitemaps like the above – just make sure their names are different.
