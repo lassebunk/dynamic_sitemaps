@@ -20,5 +20,9 @@ module DynamicSitemaps
     def folder
       sitemap.folder
     end
+
+    def protocol
+      sitemap.protocol
+    end
   end
 end
