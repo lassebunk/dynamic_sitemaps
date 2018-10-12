@@ -33,9 +33,15 @@ module DynamicSitemaps
     def write_sitemaps(file, sitemaps)
       sitemaps.each do |sitemap|
         sitemap.files.each do |file_name|
-          file.puts '<sitemap>',
-                    "<loc>#{sitemap.protocol}://#{sitemap.host}/#{sitemap.folder}/#{file_name}</loc>",
-                    '</sitemap>'
+          if sitemap.custom_path.present?
+            file.puts '<sitemap>',
+                      "<loc>#{sitemap.protocol}://#{sitemap.host}/#{sitemap.custom_path}/#{file_name}</loc>",
+                      '</sitemap>'
+          else
+            file.puts '<sitemap>',
+                      "<loc>#{sitemap.protocol}://#{sitemap.host}/#{sitemap.folder}/#{file_name}</loc>",
+                      '</sitemap>'
+          end
         end
       end
     end

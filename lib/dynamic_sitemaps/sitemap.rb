@@ -1,6 +1,7 @@
 module DynamicSitemaps
   class Sitemap
     attr_reader :name, :collection, :block, :host, :folder, :protocol
+    attr_accessor :custom_path
 
     # Initializes a sitemap object.
     # 
@@ -19,6 +20,7 @@ module DynamicSitemaps
         @host = options[:host]
         @folder = options[:folder]
         @collection = options[:collection]
+        @custom_path = options[:custom_path]
       end
 
       @block = block

@@ -110,6 +110,10 @@ module DynamicSitemaps
     def protocol
       sitemap.protocol
     end
+    
+    def set_custom_path(custom_path)
+      sitemap.custom_path = custom_path
+    end
 
     def ensure_host!
       raise "No host specified. Please specify a host using `host \"www.mydomain.com\"` at the top of your sitemap configuration file." if sitemap.host.blank?

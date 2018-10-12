@@ -24,5 +24,9 @@ module DynamicSitemaps
     def protocol
       sitemap.protocol
     end
+
+    def custom_path
+      sitemap.custom_path
+    end
   end
 end
